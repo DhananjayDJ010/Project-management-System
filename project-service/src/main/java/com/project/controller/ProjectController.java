@@ -5,6 +5,7 @@ package com.project.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.project.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.dto.User;
-import com.project.model.ApiResponse;
-import com.project.model.ProjectDetailsModel;
-import com.project.model.ProjectModel;
-import com.project.model.SubTaskModel;
-import com.project.model.UserStoryModel;
 import com.project.service.ProjectService;
 
 @RestController
@@ -62,9 +58,9 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/manager/{managerId}/create-project")
-	public ResponseEntity<ApiResponse> createProject(@PathVariable("managerId") String userId, @RequestBody ProjectModel projectModel){
+	public ResponseEntity<ProjectDataModel> createProject(@PathVariable("managerId") String userId, @RequestBody ProjectModel projectModel){
 		
-		ApiResponse response = service.createProject(userId,projectModel);
+		ProjectDataModel response = service.createProject(userId,projectModel);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -141,11 +137,9 @@ public class ProjectController {
 		
 	}
 
-	@GetMapping("/all-projectids")
-	public ResponseEntity<List<String>> getAllProjectIds(){
+	@GetMapping("/project/managed/{managerId}")
+	public ResponseEntity<List<ProjectDataModel>> getProjectsManaged(@PathVariable("managerId") String managerId){
 
-		List<String> response = service.getAllProjectIds();
-
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+		return ResponseEntity.status(HttpStatus.OK).body(service.getProjectsManaged(managerId));
 	}
 }

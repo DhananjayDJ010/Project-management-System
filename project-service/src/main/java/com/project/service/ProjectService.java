@@ -3,13 +3,9 @@ package com.project.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.project.model.*;
 import org.springframework.stereotype.Service;
 
-import com.project.model.ApiResponse;
-import com.project.model.ProjectDetailsModel;
-import com.project.model.ProjectModel;
-import com.project.model.SubTaskModel;
-import com.project.model.UserStoryModel;
 @Service
 public interface ProjectService {
 	public List<ApiResponse> createUserStory(List<UserStoryModel> userStoryDetails);
@@ -28,9 +24,9 @@ public interface ProjectService {
 
 	public List<ProjectDetailsModel> getAllDetails(int userId);
 
-	public ApiResponse createProject(String userId, ProjectModel projectModel);
+	public ProjectDataModel createProject(String userId, ProjectModel projectModel);
 
 	public String addUsersToProject(int projectId, List<Integer> listOfUsers);
 
-	public List<String> getAllProjectIds();
+	public List<ProjectDataModel> getProjectsManaged(String managerId);
 }

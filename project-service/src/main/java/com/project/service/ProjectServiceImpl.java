@@ -213,7 +213,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ApiResponse createProject(String userId,ProjectModel projectModel) {
+	public ProjectDataModel createProject(String userId,ProjectModel projectModel) {
 		projectModel.setManagerId(userId);
 		
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -221,9 +221,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 		ProjectDTO projectDTO1 = projectRepository.save(projectDTO);
 		
-		response.setId(projectDTO1.getProjectId());
-		response.setStatus(HttpStatus.CREATED.name());
-		return response;
+		return modelMapper.map(projectDTO1, ProjectDataModel.class);
 	}
 
 	@Override
@@ -234,14 +232,10 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<String> getAllProjectIds() {
-		List<ProjectDTO> projectDTOList = projectRepository.findAll();
-		List<String> projectIdList = new ArrayList<>();
-		if(! projectDTOList.isEmpty()){
-			projectIdList = projectDTOList.stream().map(projectDTO -> Integer.toString(projectDTO.getProjectId()))
-					.collect(Collectors.toList());
-		}
-		return projectIdList;
+	public List<ProjectDataModel> getProjectsManaged(String managerId) {
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		List<ProjectDTO> projectDTO = projectRepository.findByManagerId(managerId);
+		return projectDTO.stream().map(project -> modelMapper.map(project, ProjectDataModel.class)).collect(Collectors.toList());
 	}
 
 }
