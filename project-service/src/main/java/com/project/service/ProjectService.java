@@ -24,13 +24,15 @@ public interface ProjectService {
 
 	public List<ProjectDetailsModel> getAllDetails(int userId);
 
-	public ApiResponse createProject(String userId, ProjectModel projectModel);
+	public ProjectDataModel createProject(String userId, ProjectModel projectModel);
 
 	public String addUsersToProject(int projectId, List<Integer> listOfUsers);
 
-	public List<String> getAllProjectIds();
+
+	public List<ProjectDataModel> getProjectsManaged(String managerId);
 
 	public ApiResponse addSprint(SprintModel sprint);
 
 	public ApiResponse updateSprint(SprintModel sprint, int id);
+
 }

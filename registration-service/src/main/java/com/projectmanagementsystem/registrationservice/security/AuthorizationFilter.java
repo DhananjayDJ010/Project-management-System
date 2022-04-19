@@ -6,6 +6,7 @@ import com.projectmanagementsystem.registrationservice.exception.InvalidProjectA
 import com.projectmanagementsystem.registrationservice.exception.JWTException;
 import com.projectmanagementsystem.registrationservice.exception.UserNotFoundException;
 import com.projectmanagementsystem.registrationservice.model.CollaborationRole;
+import com.projectmanagementsystem.registrationservice.model.ProjectDataModel;
 import com.projectmanagementsystem.registrationservice.model.ProjectRoleModel;
 import com.projectmanagementsystem.registrationservice.model.UserRole;
 import com.projectmanagementsystem.registrationservice.service.RegistrationService;
@@ -61,44 +62,65 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                         for(String key : role.keySet())
                             rolesFinal.add(new SimpleGrantedAuthority(role.get(key)));
                     }
-                    String projectIds = request.getHeader("projectIds");
-                    if(projectIds == null || projectIds.isBlank()) {
-                        throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
-                    }
-                    List<String> projectIdList = Arrays.asList(projectIds.split(","));
+
                     UserDetailsDTO userDetailsDTO = registrationService.getUserDetailsByEmailId(userName);
 
                     if(! userName.equals(userDetailsDTO.getEmailId()))
                         throw new UserNotFoundException("Authentication failed: Invalid user");
 
-                    List<String> projectIdsProcessed = userDetailsDTO.getProjectRoles().stream()
-                            .map(projectRoleModel -> projectRoleModel.getProjectId()).collect(Collectors.toList());
-                    List<CollaborationRole> filtered = userDetailsDTO.getProjectRoles().stream()
-                            .filter(projectRoleModel -> projectIdList.contains(projectRoleModel.getProjectId()))
-                            .map(projectRoleModel -> projectRoleModel.getCollaborationRole())
-                            .collect(Collectors.toList());
+                    if(! request.getServletPath().contains("get-all-users") &&
+                            ! request.getServletPath().contains("get-details")){
+                        String projectIds = request.getHeader("projectIds");
+                        if(projectIds == null || projectIds.isBlank()) {
+                            throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
+                        }
+                        List<String> projectIdList = Arrays.asList(projectIds.split(","));
+                        List<String> projectIdsProcessed = userDetailsDTO.getProjectRoles().stream()
+                                .map(projectRoleModel -> projectRoleModel.getProjectId()).collect(Collectors.toList());
+                        List<CollaborationRole> filtered = userDetailsDTO.getProjectRoles().stream()
+                                .filter(projectRoleModel -> projectIdList.contains(projectRoleModel.getProjectId()))
+                                .map(projectRoleModel -> projectRoleModel.getCollaborationRole())
+                                .collect(Collectors.toList());
 
-                    // project service call to get project ids
-                    List<String> allProjectIds = projectServiceClient.getAllProjectIds();
-
-                    if(userDetailsDTO.getUserRole().equals(UserRole.MANAGER) && (allProjectIds.isEmpty() ||
-                            ! allProjectIds.containsAll(projectIdList)))
-                        rolesFinal.add(new SimpleGrantedAuthority(CollaborationRole.PROJECT_MANAGER.name()));
-                    else{
-                        if(projectIdList.size() == 1) {
-                            if(projectIdsProcessed.contains(projectIdList.get(0)))
-                                rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));
-                            else
-                                throw new InvalidProjectAccessException("Project id " + filtered.get(0).name() + "is invalid");
+                        if(userDetailsDTO.getUserRole().equals(UserRole.MANAGER)) {
+                            if(request.getServletPath().contains("manage-user")) {
+                                String createProject = request.getHeader("create-project");
+                                if(createProject == null || createProject.isBlank()) {
+                                    throw new InvalidProjectAccessException("create-project header is not passed in the request");
+                                }
+                                if(! createProject.equalsIgnoreCase("true") &&
+                                        ! createProject.equalsIgnoreCase("false")){
+                                    throw new InvalidProjectAccessException("create-project header value should be true/TRUE/false/FALSE");
+                                }
+                                if(createProject.equalsIgnoreCase("true")){
+                                    List<ProjectDataModel> allManagedProjects = projectServiceClient.
+                                            getProjectsManaged(userDetailsDTO.getUserId());
+                                    List<String> managedIds = allManagedProjects.stream().
+                                            map(proj -> proj.getProjectId()).collect(Collectors.toList());
+                                    if(! managedIds.isEmpty() && managedIds.containsAll(projectIdList)){
+                                        rolesFinal.add(new SimpleGrantedAuthority(CollaborationRole.PROJECT_MANAGER.name()));
+                                    }
+                                    else if(! managedIds.containsAll(projectIdList)){
+                                        throw new InvalidProjectAccessException("User has varying access privileges across given projects");
+                                    }
+                                }
+                            }
                         }
                         else{
-                            if(projectIdsProcessed.containsAll(projectIdList) && new HashSet<>(filtered).size() == 1)
-                                rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));
-                            else
-                                throw new InvalidProjectAccessException("User has varying access privileges across given projects");
+                            if(projectIdList.size() == 1) {
+                                if(projectIdsProcessed.contains(projectIdList.get(0)))
+                                    rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));
+                                else
+                                    throw new InvalidProjectAccessException("Project id " + filtered.get(0).name() + "is invalid");
+                            }
+                            else{
+                                if(projectIdsProcessed.containsAll(projectIdList) && new HashSet<>(filtered).size() == 1)
+                                    rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));
+                                else
+                                    throw new InvalidProjectAccessException("User has varying access privileges across given projects");
+                            }
                         }
                     }
-
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetailsDTO.getEmailId(),
                                     userDetailsDTO.getEncryptedPassword(), rolesFinal);

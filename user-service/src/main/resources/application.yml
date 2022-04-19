@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8084
 
 token:
   expiration_time: 900000
@@ -7,11 +7,11 @@ token:
 
 spring:
   application:
-    name: registration-service
+    name: user-service
   datasource:
     username: postgres
     password: Root@010
-    url: jdbc:postgresql://localhost:5432/RegistrationDB
+    url: jdbc:postgresql://localhost:5432/NotificationDB
   jpa:
     defer-datasource-initialization: true
     hibernate:

@@ -3,6 +3,7 @@ package com.project.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.project.model.ProjectDataModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,7 @@ public interface ProjectRepository extends JpaRepository<ProjectDTO, Integer> {
 	
 	@Query(nativeQuery=true, value=ProjectQuery.query)
 	public List<ProjectDetailsModel> getAllDetails();
+
+	public List<ProjectDTO> findByManagerId(String managerId);
 
 }

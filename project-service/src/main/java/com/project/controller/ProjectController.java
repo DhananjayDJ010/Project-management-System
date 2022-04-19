@@ -58,9 +58,9 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/manager/{managerId}/create-project")
-	public ResponseEntity<ApiResponse> createProject(@PathVariable("managerId") String userId, @RequestBody ProjectModel projectModel){
+	public ResponseEntity<ProjectDataModel> createProject(@PathVariable("managerId") String userId, @RequestBody ProjectModel projectModel){
 		
-		ApiResponse response = service.createProject(userId,projectModel);
+		ProjectDataModel response = service.createProject(userId,projectModel);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -137,12 +137,10 @@ public class ProjectController {
 		
 	}
 
-	@GetMapping("/all-projectids")
-	public ResponseEntity<List<String>> getAllProjectIds(){
+	@GetMapping("/project/managed/{managerId}")
+	public ResponseEntity<List<ProjectDataModel>> getProjectsManaged(@PathVariable("managerId") String managerId){
 
-		List<String> response = service.getAllProjectIds();
-
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+		return ResponseEntity.status(HttpStatus.OK).body(service.getProjectsManaged(managerId));
 	}
 
 	@PostMapping("/add/sprint")

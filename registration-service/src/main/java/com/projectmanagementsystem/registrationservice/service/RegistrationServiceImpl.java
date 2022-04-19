@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @EnableTransactionManagement
@@ -74,6 +76,31 @@ public class RegistrationServiceImpl implements RegistrationService {
         });
         userDetailsDTO.setProjectRoles(projectRoleModelList);
         return userDetailsDTO;
+    }
+
+    @Override
+    public List<UserDetailsDTO> getAllUsers() {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return StreamSupport.stream(registrationDAO.findAll().spliterator(), true)
+                .map(user -> {
+                    List<ProjectRoleModel> projectRoleModelList = new ArrayList<>();
+                    UserDetailsDTO userDetailsDTO = modelMapper.map(user, UserDetailsDTO.class);
+                    userDetailsDTO.setUserId(user.getUserId().getUserId());
+                    user.getProjectRoles().forEach(projectRole -> {
+                        projectRoleModelList.add(new ProjectRoleModel(projectRole.getProjectRoleKey().getProjectId(),
+                                projectRole.getCollaborationRole()));
+                    });
+                    userDetailsDTO.setProjectRoles(projectRoleModelList);
+                    return userDetailsDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDetailsDTO> getUsersForProject(List<String> projectIds) {
+        List<UserDetailsDTO> allUsers = getAllUsers();
+        return allUsers.stream().filter(user -> user.getProjectRoles().stream().filter(project -> projectIds.contains(project.getProjectId()))
+                .collect(Collectors.toList()).size() > 0).collect(Collectors.toList());
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.projectmanagementsystem.registrationservice.service.RegistrationServi
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,17 +42,19 @@ public class RegistrationController {
     }
 
     @GetMapping("/user/get-details/{emailId}")
-    public ResponseEntity<UserDetailsResponseModel> getUserDetailsByEmailId(@PathVariable String emailId){
+    public ResponseEntity<UserDetailsDTO> getUserDetailsByEmailId(@PathVariable String emailId,
+                                                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDetailsDTO loginDTO = registrationService.getUserDetailsByEmailId(emailId);
-        UserDetailsResponseModel userDetailsResponseModel = modelMapper.map(loginDTO, UserDetailsResponseModel.class);
-        return ResponseEntity.status(HttpStatus.OK).body(userDetailsResponseModel);
+        return ResponseEntity.status(HttpStatus.OK).body(loginDTO);
     }
 
     @PostMapping("/manager/manage-user")
     public ResponseEntity<List<UserDetailsResponseModel>> manageProjectAccess(@RequestBody ProjectAccessRequestModel
                                                                         projectAccessRequestModel,
-                                                                              @RequestHeader("projectIds") String projectIds){
+                                                                              @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+                                                                              @RequestHeader("projectIds") String projectIds,
+                                                                              @RequestHeader("create-project") String createProject){
         List<String> projectIdsFromRequest = new ArrayList<>();
         List<String> projectIdsFromHeader = Arrays.asList(projectIds.split(","));
         for(ProjectAccessRequest projectAccessRequest : projectAccessRequestModel.getProjectAccessRequests()){
@@ -69,6 +72,21 @@ public class RegistrationController {
             response.add(modelMapper.map(singleUserResponse, UserDetailsResponseModel.class));
         });
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/get-all-users")
+    public ResponseEntity<List<UserDetailsDTO>> getAllUsers(){
+        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getAllUsers());
+
+    }
+
+    @GetMapping("/get-users")
+    public ResponseEntity<List<UserDetailsDTO>> getUsersForProject(@RequestHeader("projectIds") String projectIds){
+        if(projectIds == null || projectIds.isBlank()){
+            throw new InvalidProjectAccessException("Project ids not passed in header");
+        }
+        List<String> projectIdsFromHeader = Arrays.asList(projectIds.split(","));
+        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUsersForProject(projectIdsFromHeader));
     }
 
 }

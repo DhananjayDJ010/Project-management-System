@@ -37,6 +37,13 @@ public class RegistrationSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().disable();
         httpSecurity.authorizeRequests().regexMatchers(".*manager/.*")
                 .hasAnyAuthority(CollaborationRole.PROJECT_MANAGER.name());
+        httpSecurity.authorizeRequests().regexMatchers(".*get-all-users.*")
+                .hasAnyAuthority(UserRole.MANAGER.name());
+        httpSecurity.authorizeRequests().regexMatchers(".*get-users.*")
+                .hasAnyAuthority(UserRole.MANAGER.name(), CollaborationRole.PROJECT_MANAGER.name(),
+                        CollaborationRole.MEMBER.name(), CollaborationRole.SCRUM_MASTER.name());
+        httpSecurity.authorizeRequests().regexMatchers(".*get-details.*")
+                .hasAnyAuthority(UserRole.USER.name(), UserRole.MANAGER.name());
         httpSecurity.authorizeRequests().regexMatchers("/", ".*user/.*").permitAll();
         httpSecurity.addFilter(getAuthenticationFilter());
         httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationService, projectServiceClient),
