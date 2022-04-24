@@ -94,7 +94,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                 }
                                 if(createProject.equalsIgnoreCase("true")){
                                     List<ProjectDataModel> allManagedProjects = projectServiceClient.
-                                            getProjectsManaged(userDetailsDTO.getUserId());
+                                            getProjectsManaged(userDetailsDTO.getUserId(), "Bearer " + token);
                                     List<String> managedIds = allManagedProjects.stream().
                                             map(proj -> proj.getProjectId()).collect(Collectors.toList());
                                     if(! managedIds.isEmpty() && managedIds.containsAll(projectIdList)){
