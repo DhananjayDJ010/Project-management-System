@@ -31,6 +31,11 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.headers().frameOptions().disable();
+        httpSecurity.authorizeRequests().regexMatchers(".*/manager/manage-user.*")
+                .hasAnyAuthority(CollaborationRole.PROJECT_MANAGER.name());
+        httpSecurity.authorizeRequests().regexMatchers(".*/notify.*")
+                .hasAnyAuthority(UserRole.MANAGER.name(), UserRole.USER.name());
+        httpSecurity.headers().frameOptions().disable();
         httpSecurity.authorizeRequests().regexMatchers(".*/manager/create-project.*", ".*/project/managed/.*")
                 .hasAnyAuthority(UserRole.MANAGER.name());
         httpSecurity.authorizeRequests().regexMatchers(".*/create/user-stories.*",
@@ -41,8 +46,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
                         CollaborationRole.MEMBER.name());
         httpSecurity.authorizeRequests().regexMatchers(".*/allDetails.*")
                 .hasAnyAuthority(UserRole.MANAGER.name(), UserRole.USER.name());
-
-        httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationServiceClient, projectService),
+        httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationServiceClient, projectServiceClient),
                 UsernamePasswordAuthenticationFilter.class);
     }
 }
