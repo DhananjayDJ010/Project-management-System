@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 @Setter
 public class RegistrationResponseModel {
     private String emailId;
+    private String firstName;
+    private String lastName;
     private String userId;
     private String encryptedPassword;
     @Enumerated(EnumType.STRING)

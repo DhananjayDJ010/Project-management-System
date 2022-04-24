@@ -16,6 +16,8 @@ import java.util.List;
 @Setter
 public class UserDetailsResponseModel {
     private String emailId;
+    private String firstName;
+    private String lastName;
     private String userId;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

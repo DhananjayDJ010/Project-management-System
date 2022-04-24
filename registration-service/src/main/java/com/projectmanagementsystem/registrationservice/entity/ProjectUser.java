@@ -24,6 +24,8 @@ public class ProjectUser {
     @EmbeddedId
     private ProjectUserKey userId;
     private String encryptedPassword;
+    private String firstName;
+    private String lastName;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     @JsonManagedReference

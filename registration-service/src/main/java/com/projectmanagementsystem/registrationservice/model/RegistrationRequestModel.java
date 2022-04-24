@@ -16,9 +16,13 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class RegistrationRequestModel {
-    @NotNull(message = "Username should not be empty")
+    @NotNull(message = "Email id should not be empty")
     @Email
     private String emailId;
+    @NotNull(message = "First name should not be empty")
+    private String firstName;
+    @NotNull(message = "Last name should not be empty")
+    private String lastName;
     @NotNull(message = "Password should not be empty")
     @Size(min = 8, message = "Password should be of minimum 8 characters")
     private String password;
