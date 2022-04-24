@@ -66,8 +66,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 if(! userName.equals(userDetailsDTO.getEmailId()))
                     throw new UserNotFoundException("Authentication failed: Invalid user");
 
-                if(! request.getServletPath().contains("get-all-users") &&
-                        ! request.getServletPath().contains("create-project")){
+                if(! request.getServletPath().contains("get-all-users") && ! request.getServletPath().contains("allDetails") &&
+                        ! request.getServletPath().contains("create-project") && ! request.getServletPath().contains("notify")){
                     String projectIds = request.getHeader("projectIds");
                     if(projectIds == null || projectIds.isBlank()) {
                         throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
@@ -92,7 +92,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             }
                             if(createProject.equalsIgnoreCase("true")){
                                 List<ProjectDataModel> allManagedProjects = projectServiceClient.
-                                        getProjectsManaged(userDetailsDTO.getUserId());
+                                        getProjectsManaged(userDetailsDTO.getUserId(), "Bearer " + token);
                                 List<String> managedIds = allManagedProjects.stream().
                                         map(proj -> proj.getProjectId()).collect(Collectors.toList());
                                 if(! managedIds.isEmpty() && managedIds.containsAll(projectIdList)){
@@ -119,6 +119,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                         }
                     }
                 }
+
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetailsDTO.getUserId(),
                                 userDetailsDTO.getEncryptedPassword(), rolesFinal);

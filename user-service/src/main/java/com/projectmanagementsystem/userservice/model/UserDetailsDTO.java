@@ -16,6 +16,8 @@ import java.util.List;
 public class UserDetailsDTO {
     private String emailId;
     private String userId;
+    private String firstName;
+    private String lastName;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private String password;

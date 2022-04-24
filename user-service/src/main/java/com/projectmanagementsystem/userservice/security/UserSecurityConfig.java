@@ -31,8 +31,12 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.headers().frameOptions().disable();
-        httpSecurity.authorizeRequests().regexMatchers("/manager/create-project")
+        httpSecurity.authorizeRequests().regexMatchers(".*/manager/create-project.*")
                 .hasAnyAuthority(UserRole.MANAGER.name());
+        httpSecurity.authorizeRequests().regexMatchers(".*/manager/manage-user.*")
+                .hasAnyAuthority(CollaborationRole.PROJECT_MANAGER.name());
+        httpSecurity.authorizeRequests().regexMatchers(".*/notify.*")
+                .hasAnyAuthority(UserRole.MANAGER.name(), UserRole.USER.name());
         httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationServiceClient, projectServiceClient),
                 UsernamePasswordAuthenticationFilter.class);
     }
