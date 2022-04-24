@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ProjectService {
-	public List<ApiResponse> createUserStory(List<UserStoryModel> userStoryDetails);
+	public List<ApiResponse> createUserStory(List<UserStoryModel> userStoryDetails, String projectIds);
 
 	public List<ApiResponse> addUserStories(List<Integer> listOfIds);
 
@@ -20,19 +20,9 @@ public interface ProjectService {
 	public ApiResponse updateSubTask(int userStoryId, int id,
 			SubTaskModel subTask);
 
-	public Optional<List<ProjectModel>> getProjectDetails(int userId);
-
 	public List<ProjectDetailsModel> getAllDetails(int userId);
 
 	public ProjectDataModel createProject(String userId, ProjectModel projectModel);
 
-	public String addUsersToProject(int projectId, List<Integer> listOfUsers);
-
-
 	public List<ProjectDataModel> getProjectsManaged(String managerId);
-
-	public ApiResponse addSprint(SprintModel sprint);
-
-	public ApiResponse updateSprint(SprintModel sprint, int id);
-
 }

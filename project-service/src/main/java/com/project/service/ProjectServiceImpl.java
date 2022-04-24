@@ -1,10 +1,13 @@
 package com.project.service;
 
 import com.project.dao.ProjectRepository;
-import com.project.dao.SprintRepository;
 import com.project.dao.SubTaskRepository;
 import com.project.dao.UserStoryRepository;
-import com.project.dto.*;
+import com.project.dto.ProjectDTO;
+import com.project.dto.Status;
+import com.project.dto.SubTaskDTO;
+import com.project.dto.UserStoryDTO;
+import com.project.exception.InvalidProjectAccessException;
 import com.project.model.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -15,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,28 +33,30 @@ public class ProjectServiceImpl implements ProjectService {
 	private final ProjectRepository projectRepository;
 	private final ModelMapper modelMapper;
 	private final ApiResponse response;
-	private final SprintRepository sprintRepository;
 	
 	public ProjectServiceImpl(UserStoryRepository userRepository,
-							  ModelMapper modelmapper, ApiResponse respose, SubTaskRepository subTaskRepository,
-							  ProjectRepository projectRepository, SprintRepository sprintRepository) {
+			ModelMapper modelmapper,ApiResponse respose,SubTaskRepository subTaskRepository,
+			ProjectRepository projectRepository) {
 		super();
 		this.userStoryRepository = userRepository;
 		this.modelMapper = modelmapper;
 		this.response=respose;
 		this.subTaskRepository=subTaskRepository;
 		this.projectRepository=projectRepository;
-		this.sprintRepository = sprintRepository;
 	}
 	
 	@Override
-	public List<ApiResponse> createUserStory(List<UserStoryModel> userStoryDetails){
+	public List<ApiResponse> createUserStory(List<UserStoryModel> userStoryDetails, String projectIds){
 		 
 		List<Integer> listOfIds = new ArrayList<>();
 		List<ApiResponse> responseList = new ArrayList<>();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		List<UserStoryDTO> userStoryDTO = modelMapper.map(userStoryDetails,new TypeToken<List<UserStoryDTO>>(){}.getType());
-		
+
+		List<ProjectDTO> projects = projectRepository.findProjectDetailsById(Arrays.asList(projectIds.split(",")));
+		if(projects.isEmpty()){
+			throw new InvalidProjectAccessException("Project id is invalid");
+		}
 		for(UserStoryDTO userStory :userStoryDTO){
 			userStory.setBacklog(true);
 			userStory.setStatus(Status.NEW);
@@ -165,25 +171,6 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Optional<List<ProjectModel> >getProjectDetails(int userId) {
-		
-		//rest template call to registration service to fetch project ids corresponding to logged in user
-		List<ProjectModel> projectsDetails1= new ArrayList<>();
-		List<Integer> projectIds = new ArrayList<>();
-		Optional<List<Integer>>list= Optional.of(projectIds);
-		if(list.isPresent()){
-		List<ProjectDTO>projectsDetails = projectRepository.findAllById(projectIds);
-		
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		 projectsDetails1 =modelMapper.map(projectsDetails,new TypeToken<List<ProjectModel>>(){}.getType());
-		 
-		 return Optional.of(projectsDetails1);
-		}else{
-		return Optional.empty();
-		}
-	}
-
-	@Override
 	public List<ProjectDetailsModel> getAllDetails(int userId) {
 		
 		List<ProjectDetailsModel>allDetails = projectRepository.getAllDetails();
@@ -225,63 +212,10 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public String addUsersToProject(int projectId, List<Integer> listOfUsers) {
-	//rest call to reg service to update project id in users table
-		
-		return "Users are added to project";
-	}
-
-	@Override
 	public List<ProjectDataModel> getProjectsManaged(String managerId) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		List<ProjectDTO> projectDTO = projectRepository.findByManagerId(managerId);
 		return projectDTO.stream().map(project -> modelMapper.map(project, ProjectDataModel.class)).collect(Collectors.toList());
 	}
-	@Override
-	public ApiResponse addSprint(SprintModel sprint){
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		SprintDTO sprintDTO = modelMapper.map(sprint,SprintDTO.class);
-
-		SprintDTO dto = sprintRepository.save(sprintDTO);
-
-		response.setId(dto.getId());
-		response.setStatus(HttpStatus.CREATED.name());
-		log.info("Sprint created with id : {} " , dto.getId());
-		return  response;
-
-
-	}
-
-	public ApiResponse updateSprint(SprintModel sprint, int id){
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		SprintDTO sprintDTO = modelMapper.map(sprint,SprintDTO.class);
-
-		Optional<SprintDTO> dto = sprintRepository.findById(id);
-
-		if(dto.isPresent()){
-			if(0 != sprintDTO.getProjectId())
-				dto.get().setProjectId(sprintDTO.getProjectId());
-
-			if(null != sprintDTO.getDuration())
-				dto.get().setDuration(sprintDTO.getDuration());
-
-			if(null != sprintDTO.getStartDate())
-				dto.get().setStartDate(sprintDTO.getStartDate());
-
-			if(null!= sprintDTO.getEndDate())
-				dto.get().setEndDate(sprintDTO.getEndDate());
-
-			dto.get().setSprintActive(sprintDTO.isSprintActive());
-
-			SprintDTO sprintDTO1 = sprintRepository.save(dto.get());
-
-			response.setId(sprintDTO1.getId());
-			response.setStatus("created");
-
-		}
-
-		return response;
-	}
-
 
 }

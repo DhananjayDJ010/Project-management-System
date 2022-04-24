@@ -12,10 +12,10 @@ import com.project.dto.ProjectDTO;
 import com.project.model.ProjectDetailsModel;
 import com.project.queries.ProjectQuery;
 
-public interface ProjectRepository extends JpaRepository<ProjectDTO, Integer> {
+public interface ProjectRepository extends JpaRepository<ProjectDTO, String> {
 	
 	@Query(nativeQuery=true, value="select from project_details where id in(:projectIds)")
-	public List<ProjectDTO> findProjectDetailsById(@Param("projectIds") List<Integer> projectIds);
+	public List<ProjectDTO> findProjectDetailsById(@Param("projectIds") List<String> projectIds);
 	
 	@Query(nativeQuery=true, value=ProjectQuery.query)
 	public List<ProjectDetailsModel> getAllDetails();
