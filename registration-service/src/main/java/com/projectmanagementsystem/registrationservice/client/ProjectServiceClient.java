@@ -14,5 +14,6 @@ import java.util.List;
 public interface ProjectServiceClient {
     @GetMapping("/api/v1.0/project-tracker/project/managed/{managerId}")
     public List<ProjectDataModel> getProjectsManaged(@PathVariable("managerId") String managerId,
-                                                     @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+                                                     @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+                                                     @RequestHeader("projectIds") String projectIds);
 }

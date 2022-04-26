@@ -52,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
 		List<ApiResponse> responseList = new ArrayList<>();
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		List<UserStoryDTO> userStoryDTO = modelMapper.map(userStoryDetails,new TypeToken<List<UserStoryDTO>>(){}.getType());
-
+		log.info("check: " + userStoryDTO.get(0).getName());
 		List<ProjectDTO> projects = projectRepository.findProjectDetailsById(Arrays.asList(projectIds.split(",")));
 		if(projects.isEmpty()){
 			throw new InvalidProjectAccessException("Project id is invalid");

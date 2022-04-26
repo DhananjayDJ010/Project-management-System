@@ -48,6 +48,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         List<SimpleGrantedAuthority> rolesFinal = new ArrayList<>();
+        boolean caseCreate = false;
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             try{
                 String token = authorizationHeader.split(" ")[1];
@@ -92,6 +93,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                 throw new InvalidProjectAccessException("create-project header value should be true/TRUE/false/FALSE");
                             }
                             if(createProject.equalsIgnoreCase("true")){
+                                caseCreate = true;
                                 List<ProjectDataModel> allManagedProjects = projectService.
                                         getProjectsManaged(userDetailsDTO.getUserId());
                                 List<String> managedIds = allManagedProjects.stream().
@@ -105,10 +107,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             }
                         }
                     }
-                    else{
+                    if(! caseCreate){
+                        if(filtered.isEmpty()){
+                            throw new InvalidProjectAccessException("Project id passed: " + projectIds + "is invalid");
+                        }
                         if(projectIdList.size() == 1) {
-                            if(projectIdsProcessed.contains(projectIdList.get(0)))
-                                rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));
+                            if(projectIdsProcessed.contains(projectIdList.get(0))) {
+                                rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));}
                             else
                                 throw new InvalidProjectAccessException("Project id " + filtered.get(0).name() + "is invalid");
                         }

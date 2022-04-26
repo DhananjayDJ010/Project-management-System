@@ -18,6 +18,7 @@ import javax.persistence.*;
 @Table(name="Project_Details")
 public class ProjectDTO {
 	@Id
+    @Column(name = "project_id")
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",

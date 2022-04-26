@@ -50,6 +50,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         else{
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             List<SimpleGrantedAuthority> rolesFinal = new ArrayList<>();
+            boolean caseCreate = false;
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try{
                     String token = authorizationHeader.split(" ")[1];
@@ -93,8 +94,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                     throw new InvalidProjectAccessException("create-project header value should be true/TRUE/false/FALSE");
                                 }
                                 if(createProject.equalsIgnoreCase("true")){
+                                    caseCreate = true;
                                     List<ProjectDataModel> allManagedProjects = projectServiceClient.
-                                            getProjectsManaged(userDetailsDTO.getUserId(), "Bearer " + token);
+                                            getProjectsManaged(userDetailsDTO.getUserId(), "Bearer " + token, projectIds);
                                     List<String> managedIds = allManagedProjects.stream().
                                             map(proj -> proj.getProjectId()).collect(Collectors.toList());
                                     if(! managedIds.isEmpty() && managedIds.containsAll(projectIdList)){
@@ -106,7 +108,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                 }
                             }
                         }
-                        else{
+                        if(! caseCreate){
+                            if(filtered.isEmpty()){
+                                throw new InvalidProjectAccessException("Project id passed: " + projectIds + "is invalid");
+                            }
                             if(projectIdList.size() == 1) {
                                 if(projectIdsProcessed.contains(projectIdList.get(0)))
                                     rolesFinal.add(new SimpleGrantedAuthority(filtered.get(0).name()));

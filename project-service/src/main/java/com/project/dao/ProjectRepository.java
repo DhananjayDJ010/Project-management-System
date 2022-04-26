@@ -14,7 +14,7 @@ import com.project.queries.ProjectQuery;
 
 public interface ProjectRepository extends JpaRepository<ProjectDTO, String> {
 	
-	@Query(nativeQuery=true, value="select from project_details where id in(:projectIds)")
+	@Query(nativeQuery=true, value="select from project_details where project_id in(:projectIds)")
 	public List<ProjectDTO> findProjectDetailsById(@Param("projectIds") List<String> projectIds);
 	
 	@Query(nativeQuery=true, value=ProjectQuery.query)
