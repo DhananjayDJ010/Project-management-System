@@ -239,7 +239,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Optional<SprintDTO> dto = sprintRepository.findById(id);
 
 		if(dto.isPresent()){
-			if(0 != sprintDTO.getProjectId())
+			if(! sprintDTO.getProjectId().isEmpty())
 				dto.get().setProjectId(sprintDTO.getProjectId());
 
 			if(null != sprintDTO.getDuration())

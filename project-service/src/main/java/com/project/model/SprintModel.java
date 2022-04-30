@@ -11,7 +11,7 @@ import java.util.Date;
 @ToString
 public class SprintModel {
     private String name;
-    private int projectId;
+    private String projectId;
     private String duration;
     private Date startDate;
     private Date endDate;
