@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.project.model.*;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,5 +30,13 @@ public interface ProjectService {
 	public ApiResponse addSprint(SprintModel sprint);
 
 	public ApiResponse updateSprint(SprintModel sprint, int id);
+
+	List<SearchResponseModel> searchForDetails(Optional<Integer> id,
+			Optional<String> name, String flag);
+
+	public List<SearchResponseModel> searchForUsers(int projectId,
+			Optional<Integer> id, Optional<String> name);
+
+	public ApiResponse deleteSubTask(int id);
 
 }

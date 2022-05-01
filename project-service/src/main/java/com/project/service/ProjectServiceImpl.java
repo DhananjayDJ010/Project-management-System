@@ -7,6 +7,7 @@ import com.project.dao.UserStoryRepository;
 import com.project.dto.*;
 import com.project.exception.InvalidProjectAccessException;
 import com.project.model.*;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
@@ -14,10 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -231,7 +234,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 
 	}
-
+   @Override
 	public ApiResponse updateSprint(SprintModel sprint, int id){
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		SprintDTO sprintDTO = modelMapper.map(sprint,SprintDTO.class);
@@ -263,5 +266,130 @@ public class ProjectServiceImpl implements ProjectService {
 		return response;
 	}
 
+	
+@Override
+ public List<SearchResponseModel> searchForDetails(Optional<Integer> id,Optional<String> name, String flag){
+	 SearchResponseModel model = new SearchResponseModel();
+	 List<SearchResponseModel> searchList = new ArrayList<>();
+	 
+	 if(id.isPresent()){
+		 if(flag.equalsIgnoreCase("project")){
+			 
+			List<Map<String,Object>> searchResults = projectRepository.searchById(id.get());
+			
+			for( Map<String,Object> s:searchResults){
+				model.setId((int) s.get("id"));
+				model.setName((String) s.get("name"));
+				
+				searchList.add(model);
+			}
+		 }else if(flag.equalsIgnoreCase("sprint")){
+				 
+					List<Map<String,Object>> searchResults = sprintRepository.searchById(id.get());
+					
+					for( Map<String,Object> s:searchResults){
+						model.setId((int) s.get("id"));
+						model.setName((String) s.get("name"));
+						
+						searchList.add(model);
+					}
+		}else if(flag.equalsIgnoreCase("userStory")){
+				 
+				List<Map<String,Object>> searchResults = userStoryRepository.searchById(id.get());
+				
+				for( Map<String,Object> s:searchResults){
+					model.setId((int) s.get("id"));
+					model.setName((String) s.get("name"));
+					
+					searchList.add(model);
+				}
+		}else {
+			 
+			List<Map<String,Object>> searchResults = projectRepository.searchById(id.get());
+			
+			for( Map<String,Object> s:searchResults){
+				model.setId((int) s.get("id"));
+				model.setName((String) s.get("name"));
+				
+				searchList.add(model);
+			}
+		 }
+	}else{
+		
+		if(flag.equalsIgnoreCase("project")){
+			 
+			List<Map<String,Object>> searchResults = projectRepository.searchByName(name.get());
+			
+			for( Map<String,Object> s:searchResults){
+				model.setId((int) s.get("id"));
+				model.setName((String) s.get("name"));
+				
+				searchList.add(model);
+			}
+		 }else if(flag.equalsIgnoreCase("sprint")){
+				 
+					List<Map<String,Object>> searchResults = sprintRepository.searchByName(name.get());
+					
+					for( Map<String,Object> s:searchResults){
+						model.setId((int) s.get("id"));
+						model.setName((String) s.get("name"));
+						
+						searchList.add(model);
+					}
+		}else if(flag.equalsIgnoreCase("userStory")){
+				 
+				List<Map<String,Object>> searchResults = userStoryRepository.searchByName(name.get());
+				
+				for( Map<String,Object> s:searchResults){
+					model.setId((int) s.get("id"));
+					model.setName((String) s.get("name"));
+					
+					searchList.add(model);
+				}
+		}else {
+			 
+			List<Map<String,Object>> searchResults = projectRepository.searchByName(name.get());
+			
+			for( Map<String,Object> s:searchResults){
+				model.setId((int) s.get("id"));
+				model.setName((String) s.get("name"));
+				
+				searchList.add(model);
+			}
+		 }
+			
+		}
+	 return searchList;
+		 }
 
+@Override
+public List<SearchResponseModel> searchForUsers(int projectId,
+		Optional<Integer> id, Optional<String> name) {
+
+	List<SearchResponseModel> searchList = new ArrayList<>();
+	
+	StringBuilder sb = new StringBuilder();
+	sb.append("select u.user_id,concat(u.first_name,' ',u.last_name) as name from project_user u inner join"
+			+ "project_role p pn u.user_id = p.user_id");
+	if(id.isPresent()){
+		sb.append("where p.project_id="+projectId +" and u.user_id="+id.get());
+	}else{
+		sb.append("where p.project_id="+projectId +" and (u.first_name="+name.get() +"||"+" u.last_name="+name.get());
+	}
+	
+	//rest call to reg service
+	return null;
 }
+
+@Transactional
+@Override
+public ApiResponse deleteSubTask(int id) {
+	subTaskRepository.deleteById(id);
+	response.setId(id);
+	response.setStatus("deleted");
+	
+	return response;
+}
+	 
+ }
+

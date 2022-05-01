@@ -152,5 +152,23 @@ public class ProjectController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
 	}
-
+	
+	@GetMapping("/search")
+	public ResponseEntity<List<SearchResponseModel> >searchForDetails(@RequestParam Optional<Integer> id,@RequestParam Optional<String> name,
+			@RequestParam String searchFlag){
+		
+		List<SearchResponseModel> searchResult=	service.searchForDetails(id,name,searchFlag);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(searchResult);
+	}
+    
+	@GetMapping("/search/{projectId}")
+	public ResponseEntity<List<SearchResponseModel>> searchForUsers(@PathVariable("projectId") int projectId,
+			@RequestParam Optional<Integer> id, @RequestParam Optional<String> name){
+		
+		List<SearchResponseModel> searchResult= service.searchForUsers(projectId, id, name);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(searchResult);
+	}
+	
 }
