@@ -70,7 +70,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 if(! request.getServletPath().contains("get-all-users") && ! request.getServletPath().contains("managed") && ! request.getServletPath().contains("allDetails") &&
                         ! request.getServletPath().contains("create-project") && ! request.getServletPath().contains("notify")){
                     String projectIds = request.getHeader("projectIds");
-                    if(projectIds == null || projectIds.isBlank()) {
+                    if(projectIds == null || projectIds.isEmpty()) {
                         throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
                     }
                     List<String> projectIdList = Arrays.asList(projectIds.split(","));
