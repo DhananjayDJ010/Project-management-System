@@ -1,7 +1,7 @@
 package com.project.model;
 
 public class ProjectDetailsModel {
-	 private int project_id;
+	 private String project_id;
 	 private String project_name;
 	 private String project_type;
 	 private String project_owner;
@@ -28,10 +28,10 @@ public class ProjectDetailsModel {
 	 private int sub_task_consumedEfforts;
 	 private int sub_task_remainingEfforts;
 	 private String sub_task_status ;
-	public int getProject_id() {
+	public String getProject_id() {
 		return project_id;
 	}
-	public void setProject_id(int project_id) {
+	public void setProject_id(String project_id) {
 		this.project_id = project_id;
 	}
 	public String getProject_name() {

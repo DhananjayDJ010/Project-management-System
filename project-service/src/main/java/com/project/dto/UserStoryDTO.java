@@ -37,7 +37,6 @@ public class UserStoryDTO {
 	@Enumerated(EnumType.STRING)
 	@Column(name="priority")
 	private Priority priority;
-	@Column(name="isBacklog")
 	private boolean isBacklog;
 	
 	public UserStoryDTO(int id, String name,int sprintId, String assignedUser,

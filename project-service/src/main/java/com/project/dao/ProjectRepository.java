@@ -18,7 +18,7 @@ public interface ProjectRepository extends JpaRepository<ProjectDTO, String> {
 	public List<ProjectDTO> findProjectDetailsById(@Param("projectIds") List<String> projectIds);
 	
 	@Query(nativeQuery=true, value=ProjectQuery.query)
-	public List<ProjectDetailsModel> getAllDetails();
+	public List<ProjectDetailsModel> getAllDetails(@Param("user_id") String userId);
 
 	public List<ProjectDTO> findByManagerId(String managerId);
 	

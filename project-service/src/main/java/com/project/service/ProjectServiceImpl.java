@@ -174,9 +174,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectDetailsModel> getAllDetails(int userId) {
-		
-		List<ProjectDetailsModel>allDetails = projectRepository.getAllDetails();
+	public List<ProjectDetailsModel> getAllDetails(String userId) {
+		List<ProjectDetailsModel>allDetails = projectRepository.getAllDetails(userId);
 		/*ProjectDetailsModel projectDetailsModel = new ProjectDetailsModel();
 		
 		if(allDetails!=null && !allDetails.isEmpty()){

@@ -21,7 +21,7 @@ public interface ProjectService {
 	public ApiResponse updateSubTask(int userStoryId, int id,
 			SubTaskModel subTask);
 
-	public List<ProjectDetailsModel> getAllDetails(int userId);
+	public List<ProjectDetailsModel> getAllDetails(String userId);
 
 	public ProjectDataModel createProject(String userId, ProjectModel projectModel);
 

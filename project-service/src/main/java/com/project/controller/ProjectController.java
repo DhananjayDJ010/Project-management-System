@@ -115,7 +115,7 @@ public class ProjectController {
 	}
 
 	@GetMapping("/allDetails")
-	public ResponseEntity<List<ProjectDetailsModel>> getAllDetails(@RequestParam("userId") int userId,
+	public ResponseEntity<List<ProjectDetailsModel>> getAllDetails(@RequestParam("userId") String userId,
 																   @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
 		
 		List<ProjectDetailsModel> allDetails = service.getAllDetails(userId);
