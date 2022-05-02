@@ -18,7 +18,7 @@ public class SprintDTO {
 	@Column(name="name")
 	private String name;
 	@Column(name="project_id")
-	private int projectId;
+	private String projectId;
 	@Column(name="duration")
 	private String duration;
 	@Column(name="start_date")
@@ -40,10 +40,10 @@ public class SprintDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
-	public void setProjectId(int projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 	

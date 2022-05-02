@@ -1,0 +1,1672 @@
+{
+	"info": {
+		"_postman_id": "b4c1ec2c-61a1-4574-ad9b-0d32c9993a5f",
+		"name": "Project Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"emailId\":\"peter@gmail.com\",\r\n    \"firstName\":\"Peter\",\r\n    \"lastName\":\"Parker\",\r\n    \"password\":\"12345678\",\r\n    \"userRole\": \"MANAGER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/registration-service/api/v1.0/project-tracker/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"registration-service",
+						"api",
+						"v1.0",
+						"project-tracker",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Sign up",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"emailId\":\"peter@gmail.com\",\r\n    \"firstName\":\"Peter\",\r\n    \"lastName\":\"Parker\",\r\n    \"password\":\"12345678\",\r\n    \"userRole\": \"MANAGER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/registration-service/api/v1.0/project-tracker/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"registration-service",
+								"api",
+								"v1.0",
+								"project-tracker",
+								"user",
+								"register"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 11:34:36 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"emailId\": \"peter@gmail.com\",\n    \"firstName\": \"Peter\",\n    \"lastName\": \"Parker\",\n    \"userId\": \"b781c9c7-dadb-4131-b25f-7414f71fa9a1\",\n    \"encryptedPassword\": \"$2a$10$HsB0XcPIB5mA01pfijGpdOFXmFaSfkNjMenXkAOaaxJZiKG6eeBhW\",\n    \"userRole\": \"MANAGER\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get User Project Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMTUwNjN9.b3OZ_p30VRWKP263htTv_sTvtiKYGtqb6l5dJJ99nbJ7IXRiwo7CrQgbqAZVV9zWxBDpJ7--wB4U7_E3VlTXSg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/registration-service/api/v1.0/project-tracker/user/get-details/john@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"registration-service",
+						"api",
+						"v1.0",
+						"project-tracker",
+						"user",
+						"get-details",
+						"john@gmail.com"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get User Project Details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/registration-service/api/v1.0/project-tracker/user/get-details/john@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"registration-service",
+								"api",
+								"v1.0",
+								"project-tracker",
+								"user",
+								"get-details",
+								"john@gmail.com"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Content-Disposition",
+							"value": "inline;filename=f.txt"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 10:24:35 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"emailId\": \"john@gmail.com\",\n    \"firstName\": null,\n    \"lastName\": null,\n    \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\n    \"userRole\": \"MANAGER\",\n    \"password\": null,\n    \"encryptedPassword\": \"$2a$10$kO9YXTIBMAGdMoMuV.GdpOKaYZB7lPl7e0h6wAUTR0DmUIsgo5ci6\",\n    \"projectRoles\": [\n        {\n            \"projectId\": \"915478c7-49d8-41c0-80f1-e1e645db7fec\",\n            \"collaborationRole\": \"PROJECT_MANAGER\"\n        },\n        {\n            \"projectId\": \"9f7fd19f-522b-48ba-b536-03c7ad213fc2\",\n            \"collaborationRole\": \"PROJECT_MANAGER\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Manage access internal API",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTA5NjYwNjZ9.WBcTxKkQpJ1dLKFYheJD6MAvFzvhusiJgq6-aqx28968KMdO9Ms7KUY7WnhCre-yXuMpVfj5lx-ggLZYdLSMxA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "16269207-1936-4321-adf2-1931e31822ed",
+						"type": "text"
+					},
+					{
+						"key": "create-project",
+						"value": "true",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"projectAccessRequests\":[\r\n        {\r\n            \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\r\n            \"projectRoles\":[\r\n                {\r\n                    \"projectId\":\"16269207-1936-4321-adf2-1931e31822ed\",\r\n                    \"collaborationRole\":\"PROJECT_MANAGER\"\r\n\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\r\n            \"projectRoles\":[\r\n                {\r\n                    \"projectId\":\"16269207-1936-4321-adf2-1931e31822ed\",\r\n                    \"collaborationRole\":\"PROJECT_MANAGER\"\r\n\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/v1.0/project-tracker/manager/manage-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"manager",
+						"manage-user"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Manage access internal API",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "16269207-1936-4321-adf2-1931e31822ed",
+								"type": "text"
+							},
+							{
+								"key": "create-project",
+								"value": "true",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectAccessRequests\":[\r\n        {\r\n            \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\r\n            \"projectRoles\":[\r\n                {\r\n                    \"projectId\":\"16269207-1936-4321-adf2-1931e31822ed\",\r\n                    \"collaborationRole\":\"PROJECT_MANAGER\"\r\n\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\r\n            \"projectRoles\":[\r\n                {\r\n                    \"projectId\":\"16269207-1936-4321-adf2-1931e31822ed\",\r\n                    \"collaborationRole\":\"PROJECT_MANAGER\"\r\n\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1.0/project-tracker/manager/manage-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"manager",
+								"manage-user"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Apr 2022 09:33:34 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"emailId\": \"john@gmail.com\",\n        \"firstName\": null,\n        \"lastName\": null,\n        \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\n        \"userRole\": \"MANAGER\",\n        \"projectRoles\": [\n            {\n                \"projectId\": \"16269207-1936-4321-adf2-1931e31822ed\",\n                \"collaborationRole\": \"PROJECT_MANAGER\"\n            }\n        ]\n    },\n    {\n        \"emailId\": \"john@gmail.com\",\n        \"firstName\": null,\n        \"lastName\": null,\n        \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\n        \"userRole\": \"MANAGER\",\n        \"projectRoles\": [\n            {\n                \"projectId\": \"16269207-1936-4321-adf2-1931e31822ed\",\n                \"collaborationRole\": \"PROJECT_MANAGER\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"emailId\":\"john@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/v1.0/project-tracker/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"emailId\":\"john@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/v1.0/project-tracker/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"user",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTA5NjUxNDd9.8HGMDJR8y6H3rfQGUZ9U5nmbAMmEt_TkPJ_l_mZx8BYChyVPq1t2_ipgSeryYAGWesHzUpazR3s5HPlhNbHaAA"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Length",
+							"value": "337"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Apr 2022 09:10:48 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\"emailId\":\"john@gmail.com\",\"firstName\":null,\"lastName\":null,\"userId\":\"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\"userRole\":\"MANAGER\",\"password\":null,\"encryptedPassword\":\"$2a$10$kO9YXTIBMAGdMoMuV.GdpOKaYZB7lPl7e0h6wAUTR0DmUIsgo5ci6\",\"projectRoles\":[{\"projectId\":\"915478c7-49d8-41c0-80f1-e1e645db7fec\",\"collaborationRole\":\"PROJECT_MANAGER\"}]}"
+				}
+			]
+		},
+		{
+			"name": "Create Project",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTA5NzE2OTh9.7FXvqVSeu5YN4bawG9OJUywJ21t1fcndefoVfBwnodoAVB4QBKOI6w7JiA_gt4tgJwpTCzs_4IWC6qlPNSLkvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"projectName\":\"DJ Developers\",\r\n    \"projectType\": \"BUSINESS\",\r\n    \"managerId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/manager/dcaa0fec-84fc-4d07-9b0b-18d58229f4ef/create-project",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"manager",
+						"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef",
+						"create-project"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Project",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectName\":\"DJ Developers\",\r\n    \"projectType\": \"BUSINESS\",\r\n    \"managerId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/manager/dcaa0fec-84fc-4d07-9b0b-18d58229f4ef/create-project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"manager",
+								"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef",
+								"create-project"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Apr 2022 09:11:04 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"projectId\": \"16269207-1936-4321-adf2-1931e31822ed\",\n    \"projectName\": \"DJ Developers\",\n    \"projectType\": \"BUSINESS\",\n    \"managerId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Manager - Get All Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMTUwNjN9.b3OZ_p30VRWKP263htTv_sTvtiKYGtqb6l5dJJ99nbJ7IXRiwo7CrQgbqAZVV9zWxBDpJ7--wB4U7_E3VlTXSg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/api/v1.0/project-tracker/get-all-users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"get-all-users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Manager - Get All Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/v1.0/project-tracker/get-all-users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"get-all-users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 10:22:59 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"emailId\": \"john@gmail.com\",\n        \"firstName\": null,\n        \"lastName\": null,\n        \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\n        \"userRole\": \"MANAGER\",\n        \"password\": null,\n        \"encryptedPassword\": \"$2a$10$kO9YXTIBMAGdMoMuV.GdpOKaYZB7lPl7e0h6wAUTR0DmUIsgo5ci6\",\n        \"projectRoles\": [\n            {\n                \"projectId\": \"915478c7-49d8-41c0-80f1-e1e645db7fec\",\n                \"collaborationRole\": \"PROJECT_MANAGER\"\n            },\n            {\n                \"projectId\": \"9f7fd19f-522b-48ba-b536-03c7ad213fc2\",\n                \"collaborationRole\": \"PROJECT_MANAGER\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create Project main API",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMTgzOTZ9.Z8fBzXzoIi3n1YfPyjAQy2GGIcNSy4O_5gJBvZUTaiOTevSw4JFETcu382XdP0eEBsL75erHGjphz5-fJfs9Lw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"projectName\":\"DJDDDSSDDSSD DEvs\",\r\n    \"projectType\": \"BUSINESS\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/user-service/api/v1.0/project-tracker/manager/create-project",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"user-service",
+						"api",
+						"v1.0",
+						"project-tracker",
+						"manager",
+						"create-project"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Project main API",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectName\":\"DJDDDSSDDSSD DEvs\",\r\n    \"projectType\": \"BUSINESS\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/user-service/api/v1.0/project-tracker/manager/create-project",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"user-service",
+								"api",
+								"v1.0",
+								"project-tracker",
+								"manager",
+								"create-project"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "transfer-encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 11:18:34 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userDetailsResponseModels\": [\n        {\n            \"emailId\": \"john@gmail.com\",\n            \"firstName\": null,\n            \"lastName\": null,\n            \"userId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\",\n            \"userRole\": \"MANAGER\",\n            \"projectRoles\": [\n                {\n                    \"projectId\": \"a841720f-7dde-47ca-9e50-c7a3f4bd0567\",\n                    \"collaborationRole\": \"PROJECT_MANAGER\"\n                }\n            ]\n        }\n    ],\n    \"projectData\": {\n        \"projectId\": \"a841720f-7dde-47ca-9e50-c7a3f4bd0567\",\n        \"projectName\": \"DJDDDSSDDSSD DEvs\",\n        \"projectType\": \"BUSINESS\",\n        \"managerId\": \"dcaa0fec-84fc-4d07-9b0b-18d58229f4ef\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "create User Story",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMTkyODF9.lD_Cn5lMCIRTa4Bu07L7DP_JxPA1z6--w3UP1_RHXJG5U7zed5DZsjqLlyr6-p9HscAGL1bOfH3__pxvsyO0Gw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"name\":\"Task9\",\r\n        \"assignedUser\":\"user1\",\r\n        \"acceptanceCriteria\":\"acceptance criteria\",\r\n        \"storyPoints\":3,\r\n        \"estimatedEfforts\":5,\r\n        \"consumedEfforts\":0,\r\n        \"remainingEfforts\":0,\r\n        \"status\":\"TO_DO\",\r\n        \"isBacklog\":true\r\n\r\n    },\r\n    {\r\n        \"name\":\"Task2\",\r\n        \"assignedUser\":\"user1\",\r\n        \"acceptanceCriteria\":\"acceptance criteria\",\r\n        \"storyPoints\":3,\r\n        \"estimatedEfforts\":5,\r\n        \"consumedEfforts\":0,\r\n        \"remainingEfforts\":0,\r\n        \"status\":\"TO_DO\",\r\n        \"isBacklog\":true\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/create/user-stories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"create",
+						"user-stories"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "create User Story",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\":\"Task9\",\r\n        \"assignedUser\":\"user1\",\r\n        \"acceptanceCriteria\":\"acceptance criteria\",\r\n        \"storyPoints\":3,\r\n        \"estimatedEfforts\":5,\r\n        \"consumedEfforts\":0,\r\n        \"remainingEfforts\":0,\r\n        \"status\":\"TO_DO\",\r\n        \"isBacklog\":true\r\n\r\n    },\r\n    {\r\n        \"name\":\"Task2\",\r\n        \"assignedUser\":\"user1\",\r\n        \"acceptanceCriteria\":\"acceptance criteria\",\r\n        \"storyPoints\":3,\r\n        \"estimatedEfforts\":5,\r\n        \"consumedEfforts\":0,\r\n        \"remainingEfforts\":0,\r\n        \"status\":\"TO_DO\",\r\n        \"isBacklog\":true\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/create/user-stories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"create",
+								"user-stories"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 11:33:38 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 10,\n        \"status\": \"created\"\n    },\n    {\n        \"id\": 10,\n        \"status\": \"created\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Update user story",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMDg0NTV9.Gjal5_hWF1nmsyhijiqh8DlTnTcZtv5y1FeO9y25_trP8eCvX_n2evrdSBaPSnocX8yfMDhD1wHWcCHnvTZ6eA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\":\"Task1_updated\",\r\n        \"assignedUser\":\"user1\",\r\n        \"acceptanceCriteria\":\"acceptance criteria\",\r\n        \"storyPoints\":5,\r\n        \"estimatedEfforts\":5,\r\n        \"consumedEfforts\":0,\r\n        \"remainingEfforts\":0,\r\n        \"status\":\"IN_PROGRESS\",\r\n        \"isBacklog\":true\r\n\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/update/user-story/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"update",
+						"user-story",
+						"3"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update user story",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\":\"Task1_updated\",\r\n        \"assignedUser\":\"user1\",\r\n        \"acceptanceCriteria\":\"acceptance criteria\",\r\n        \"storyPoints\":3,\r\n        \"estimatedEfforts\":5,\r\n        \"consumedEfforts\":0,\r\n        \"remainingEfforts\":0,\r\n        \"status\":\"TO_DO\",\r\n        \"isBacklog\":true\r\n\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/update/user-story/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"update",
+								"user-story",
+								"3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 08:34:53 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"status\": \"updated\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Create subtask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMDkwNzZ9.kEMKtuj3eO9ukMqIMj6Y5a6PelN_F5F1e48U_IASYZ4n6aOehe7Dr_iEAgByKcLjksI-mxIcci7FcrZ_athrYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\":\"subtask1\",\r\n        \"assignedUser\":\"user1\"\r\n\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/create/user-story/3/sub-task",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"create",
+						"user-story",
+						"3",
+						"sub-task"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create subtask",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\":\"subtask1\",\r\n        \"assignedUser\":\"user1\"\r\n\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/create/user-story/3/sub-task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"create",
+								"user-story",
+								"3",
+								"sub-task"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 08:43:42 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 5,\n    \"status\": \"created\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update subtask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMDkwNzZ9.kEMKtuj3eO9ukMqIMj6Y5a6PelN_F5F1e48U_IASYZ4n6aOehe7Dr_iEAgByKcLjksI-mxIcci7FcrZ_athrYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\":\"subtask1_updated\",\r\n        \"assignedUser\":\"user2\",\r\n        \"userStoryId\":3\r\n\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/create/user-story/3/sub-task/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"create",
+						"user-story",
+						"3",
+						"sub-task",
+						"5"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update subtask",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\":\"subtask1_updated\",\r\n        \"assignedUser\":\"user2\",\r\n        \"userStoryId\":3\r\n\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/create/user-story/3/sub-task/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"create",
+								"user-story",
+								"3",
+								"sub-task",
+								"5"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 08:48:43 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 5,\n    \"status\": \"created\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add sprint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMzEyOTZ9.Nr-BnwjspccZg3h1ZgunmlE9YcfsrV4EV1tfPB4nDIgfAOQ8iSYxSjAc7K6CVj-Y45Y-_zwxrWcH3xjP35MXMA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Sprint2\",\r\n    \"projectId\":\"9f7fd19f-522b-48ba-b536-03c7ad213fc2\",\r\n    \"duration\":\"2 weeks\",\r\n    \"startDate\":\"2022-03-29\",\r\n    \"endDate\":\"2022-04-08\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/add/sprint",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"add",
+						"sprint"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add sprint",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Sprint1\",\r\n    \"projectId\":\"9f7fd19f-522b-48ba-b536-03c7ad213fc2\",\r\n    \"duration\":\"2 weeks\",\r\n    \"startDate\":\"2022-03-29\",\r\n    \"endDate\":\"2022-04-08\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/add/sprint",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"add",
+								"sprint"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 09:04:02 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 8,\n    \"status\": \"CREATED\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update sprint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdtYWlsLmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJNQU5BR0VSIn1dLCJleHAiOjE2NTEzMTAwMDZ9.-ar_GmfhrGtGPPBqgwwubQLGr3wuUJnOYT8ZDDxtwzm_5qO5ETwYxJ15I7P6_GXBr23N5iYuq_yBtQM8jS73NA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "projectIds",
+						"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Sprint1_new\",\r\n    \"projectId\":\"9f7fd19f-522b-48ba-b536-03c7ad213fc2\",\r\n    \"duration\":\"2 weeks\",\r\n    \"startDate\":\"2022-03-29\",\r\n    \"endDate\":\"2022-04-08\",\r\n    \"isSprintActive\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8086/api/v1.0/project-tracker/add/sprint/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"api",
+						"v1.0",
+						"project-tracker",
+						"add",
+						"sprint",
+						"8"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update sprint",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "projectIds",
+								"value": "9f7fd19f-522b-48ba-b536-03c7ad213fc2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Sprint1_new\",\r\n    \"projectId\":\"9f7fd19f-522b-48ba-b536-03c7ad213fc2\",\r\n    \"duration\":\"2 weeks\",\r\n    \"startDate\":\"2022-03-29\",\r\n    \"endDate\":\"2022-04-08\",\r\n    \"isSprintActive\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/v1.0/project-tracker/add/sprint/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"v1.0",
+								"project-tracker",
+								"add",
+								"sprint",
+								"8"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 30 Apr 2022 09:09:19 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 8,\n    \"status\": \"created\"\n}"
+				}
+			]
+		}
+	]
+}

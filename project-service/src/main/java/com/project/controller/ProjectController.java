@@ -126,8 +126,7 @@ public class ProjectController {
 
 	@GetMapping("/project/managed/{managerId}")
 	public ResponseEntity<List<ProjectDataModel>> getProjectsManaged(@PathVariable("managerId") String managerId,
-																	 @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
-																	 @RequestHeader("projectIds") String projectIds){
+																	 @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
 
 		return ResponseEntity.status(HttpStatus.OK).body(service.getProjectsManaged(managerId));
 	}
