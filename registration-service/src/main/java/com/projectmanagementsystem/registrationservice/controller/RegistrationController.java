@@ -5,6 +5,7 @@ import com.projectmanagementsystem.registrationservice.exception.InvalidProjectA
 import com.projectmanagementsystem.registrationservice.model.*;
 import com.projectmanagementsystem.registrationservice.service.ProjectAccessService;
 import com.projectmanagementsystem.registrationservice.service.RegistrationService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("api/v1.0/project-tracker")
 public class RegistrationController {
     private final RegistrationService registrationService;
@@ -62,8 +64,8 @@ public class RegistrationController {
                 projectIdsFromRequest.add(projectRoleModel.getProjectId());
             }
         }
-        if(! projectIdsFromHeader.containsAll(projectIdsFromRequest))
-            throw new InvalidProjectAccessException("ProjectIds mismatch between header and request");
+//        if(! projectIdsFromHeader.contains(projectIdsFromRequest))
+//            throw new InvalidProjectAccessException("ProjectIds mismatch between header and request");
         List<UserDetailsResponseModel> response = new ArrayList<>();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         projectAccessRequestModel.getProjectAccessRequests().forEach(projectAccessRequest -> {
@@ -82,7 +84,7 @@ public class RegistrationController {
 
     @GetMapping("/get-users")
     public ResponseEntity<List<UserDetailsDTO>> getUsersForProject(@RequestHeader("projectIds") String projectIds){
-        if(projectIds == null || projectIds.isBlank()){
+        if(projectIds == null || projectIds.isEmpty()){
             throw new InvalidProjectAccessException("Project ids not passed in header");
         }
         List<String> projectIdsFromHeader = Arrays.asList(projectIds.split(","));
