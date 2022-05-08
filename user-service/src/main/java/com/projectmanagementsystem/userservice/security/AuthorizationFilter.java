@@ -84,7 +84,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     if(userDetailsDTO.getUserRole().equals(UserRole.MANAGER)) {
                         if(request.getServletPath().contains("manage-user")) {
                             String createProject = request.getHeader("create-project");
-                            if(createProject == null || createProject.isBlank()) {
+                            if(createProject == null || createProject.isEmpty()) {
                                 throw new InvalidProjectAccessException("create-project header is not passed in the request");
                             }
                             if(! createProject.equalsIgnoreCase("true") &&
