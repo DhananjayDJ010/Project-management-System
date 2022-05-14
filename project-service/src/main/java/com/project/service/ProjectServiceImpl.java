@@ -69,8 +69,6 @@ public class ProjectServiceImpl implements ProjectService {
 		for(UserStoryDTO userStory:list){
 			listOfIds.add(userStory.getId());
 		}
-
-		log.info("ids added" + listOfIds);
 		
 		for(int id:listOfIds){
 			response.setId(id);
