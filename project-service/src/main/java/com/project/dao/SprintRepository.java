@@ -16,4 +16,6 @@ public interface SprintRepository extends JpaRepository<SprintDTO,Integer> {
 	
 	@Query(nativeQuery=true, value ="select id, name from sprint_details where name=:name")
 	public List<Map<String,Object>>  searchByName (@Param("name") String name);
+
+	public List<SprintDTO> findByProjectId(String projectId);
 }

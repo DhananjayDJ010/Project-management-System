@@ -1,6 +1,10 @@
 package com.project.model;
 
+import com.project.dto.Priority;
 import com.project.dto.Status;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 public class UserStoryModel {
 
@@ -14,10 +18,13 @@ public class UserStoryModel {
 	private int remainingEfforts;
 	private Status status;
 	private boolean isBacklog;
+	private int sprintId;
+	@Enumerated(EnumType.STRING)
+	private Priority priority;
 	
 	public UserStoryModel( int id,String name, String assignedUser,
 			String acceptanceCriteria, int storyPoints, int estimatedEfforts,
-			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog) {
+			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog, int sprintId) {
 		super();
 		
 		this.id=id;
@@ -30,6 +37,7 @@ public class UserStoryModel {
 		this.remainingEfforts = remainingEfforts;
 		this.status = status;
 		this.isBacklog=isBacklog;
+		this.sprintId = sprintId;
 	}
 
 	public UserStoryModel() {
@@ -108,8 +116,14 @@ public class UserStoryModel {
 	public void setBacklog(boolean isBacklog) {
 		this.isBacklog = isBacklog;
 	}
-	
-	
+
+	public int getSprintId(){
+		return sprintId;
+	}
+
+	public void setSprintId(int sprintId){
+		this.sprintId = sprintId;
+	}
 
 	public Status getStatus() {
 		return status;
@@ -119,15 +133,29 @@ public class UserStoryModel {
 		this.status = status;
 	}
 
+	public Priority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
+
 	@Override
 	public String toString() {
-		return "UserStoryDTO [ name=" + name + ", assignedUser="
-				+ assignedUser + ", acceptanceCriteria=" + acceptanceCriteria
-				+ ", storyPoints=" + storyPoints + ", estimatedEfforts="
-				+ estimatedEfforts + ", consumedEfforts=" + consumedEfforts
-				+ ", remainingEfforts=" + remainingEfforts + ", status="
-				+ status + ", isBacklog=" + isBacklog + "]";
+		return "UserStoryModel{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", assignedUser='" + assignedUser + '\'' +
+				", acceptanceCriteria='" + acceptanceCriteria + '\'' +
+				", storyPoints=" + storyPoints +
+				", estimatedEfforts=" + estimatedEfforts +
+				", consumedEfforts=" + consumedEfforts +
+				", remainingEfforts=" + remainingEfforts +
+				", status=" + status +
+				", isBacklog=" + isBacklog +
+				", sprintId=" + sprintId +
+				", priority=" + priority +
+				'}';
 	}
-	
-	
 }

@@ -2,7 +2,7 @@ server:
   port: 8082
 
 token:
-  expiration_time: 900000
+  expiration_time: 90000000
   secret: hjkahkchjsdhcksdcusuchde
 
 spring:

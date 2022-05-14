@@ -39,4 +39,8 @@ public interface ProjectService {
 
 	public ApiResponse deleteSubTask(int id);
 
+	public List<UserStoryModel> getUserStoryBySprint(int sprintId);
+
+	public List<SprintResponseModel> getAllSprintDetails(String projectId);
+
 }

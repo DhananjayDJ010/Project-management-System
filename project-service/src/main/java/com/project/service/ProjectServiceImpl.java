@@ -69,6 +69,8 @@ public class ProjectServiceImpl implements ProjectService {
 		for(UserStoryDTO userStory:list){
 			listOfIds.add(userStory.getId());
 		}
+
+		log.info("ids added" + listOfIds);
 		
 		for(int id:listOfIds){
 			response.setId(id);
@@ -102,8 +104,18 @@ public class ProjectServiceImpl implements ProjectService {
 			if(userStory.getAssignedUser()!=null && !userStory.getAssignedUser().isEmpty()){
 				userStory1.get().setAssignedUser(userStory.getAssignedUser());
 			}
-			if(userStory.getStoryPoints()!=0){
-				userStory1.get().setStoryPoints(userStory.getStoryPoints());
+			if(!userStory.getName().isEmpty()){
+				userStory1.get().setName(userStory.getName());
+			}
+			if(!userStory.getAcceptanceCriteria().isEmpty()){
+				userStory1.get().setAcceptanceCriteria(userStory.getAcceptanceCriteria());
+			}
+			if(userStory.getSprintId()!=0){
+				userStory1.get().setSprintId(userStory.getSprintId());
+				userStory1.get().setBacklog(false);
+			}
+			if(userStory.getPriority()!=null){
+				userStory1.get().setPriority(userStory.getPriority());
 			}
 			if(userStory.getStatus()!=null){
 				userStory1.get().setStatus(userStory.getStatus());
@@ -389,6 +401,20 @@ public ApiResponse deleteSubTask(int id) {
 	
 	return response;
 }
-	 
- }
+	@Override
+	public List<UserStoryModel> getUserStoryBySprint(int sprintId){
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		List<UserStoryDTO> userStoryDTOList = userStoryRepository.findBySprintId(sprintId);
+		return userStoryDTOList.stream().map(userStoryDTO -> modelMapper.map(userStoryDTO, UserStoryModel.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<SprintResponseModel> getAllSprintDetails(String projectId) {
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		return sprintRepository.findByProjectId(projectId).stream().map(sprintDTO -> modelMapper.map(sprintDTO, SprintResponseModel.class))
+				.collect(Collectors.toList());
+	}
+
+}
 
