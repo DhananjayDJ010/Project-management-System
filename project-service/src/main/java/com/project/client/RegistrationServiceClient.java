@@ -14,4 +14,7 @@ public interface RegistrationServiceClient {
     public UserDetailsDTO getUserDetailsByEmailId(@PathVariable String emailId,
                                                   @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
+    @GetMapping("api/v1.0/project-tracker/get-user/{userId}")
+    public List<String> getUser(@PathVariable("userId") String userId);
+
     }

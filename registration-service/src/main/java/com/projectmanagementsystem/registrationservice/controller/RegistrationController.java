@@ -82,11 +82,18 @@ public class RegistrationController {
 
     @GetMapping("/get-users")
     public ResponseEntity<List<UserDetailsDTO>> getUsersForProject(@RequestHeader("projectIds") String projectIds){
-        if(projectIds == null || projectIds.isBlank()){
+        if(projectIds == null || projectIds.isEmpty()){
             throw new InvalidProjectAccessException("Project ids not passed in header");
         }
         List<String> projectIdsFromHeader = Arrays.asList(projectIds.split(","));
         return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUsersForProject(projectIdsFromHeader));
     }
+
+    @GetMapping("/get-user/{userId}")
+    public ResponseEntity<List<String>> getUser(@PathVariable("userId") String userId){
+        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUser(userId));
+
+    }
+
 
 }

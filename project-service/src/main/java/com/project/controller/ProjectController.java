@@ -2,6 +2,7 @@ package com.project.controller;
 
 //import org.apache.logging.log4j.Logger;
 //import org.junit.platform.commons.logging.LoggerFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,11 +72,11 @@ public class ProjectController {
 	}
 	
 	@PostMapping("/add/sprint/{sprintId}/user-stories")
-	public ResponseEntity<List<ApiResponse>> addUserStory(@PathVariable("sprintId")String sprintId,
-			@RequestBody List<Integer> listOfIds, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
-														  @RequestHeader("projectIds") String projectIds){
+	public ResponseEntity<List<ApiResponse>> addUserStory(@PathVariable("sprintId")int sprintId,
+														  @RequestBody ArrayList<Integer> listOfIds, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+														  @RequestHeader("projectIds") String projectId){
 		
-		List<ApiResponse> response = service.addUserStories(listOfIds);
+		List<ApiResponse> response = service.addUserStories(listOfIds,sprintId);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 		
@@ -83,8 +84,7 @@ public class ProjectController {
 	
 	@PutMapping("/update/user-story/{id}")
 	public ResponseEntity<ApiResponse> updateUserStory(@PathVariable("id") int id, @RequestBody UserStoryModel userStory,
-													   @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
-													   @RequestHeader("projectIds") String projectIds){
+													   @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
 		
 		ApiResponse response = service.updateUserStory(id,userStory);
 		
@@ -134,7 +134,7 @@ public class ProjectController {
 	@PostMapping("/add/sprint")
 	public ResponseEntity<ApiResponse> addSprint(@RequestBody SprintModel sprint,
 												 @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
-												 @RequestHeader("projectIds") String projectIds){
+												 @RequestHeader("projectIds") String projectId){
 
 		ApiResponse response = service.addSprint(sprint);
 

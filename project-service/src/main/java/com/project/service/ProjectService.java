@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public interface ProjectService {
 	public List<ApiResponse> createUserStory(List<UserStoryModel> userStoryDetails, String projectIds);
 
-	public List<ApiResponse> addUserStories(List<Integer> listOfIds);
+	public List<ApiResponse> addUserStories(List<Integer> listOfIds,int sprintId);
 
 	public ApiResponse updateUserStory(int id,
 			UserStoryModel userStory);

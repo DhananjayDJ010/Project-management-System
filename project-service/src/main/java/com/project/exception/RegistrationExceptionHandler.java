@@ -18,4 +18,13 @@ public class RegistrationExceptionHandler {
         errorReportModel.setStatusCode(HttpStatus.FORBIDDEN.value());
         return new ResponseEntity<>(errorReportModel, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(value = SprintNotFoundException.class)
+    public ResponseEntity<ErrorReportModel> handleSprintException(SprintNotFoundException exception){
+        ErrorReportModel errorReportModel = new ErrorReportModel();
+        errorReportModel.setErrorReportTime(System.currentTimeMillis());
+        errorReportModel.setMessage(exception.getMessage());
+        errorReportModel.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(errorReportModel, HttpStatus.FORBIDDEN);
+    }
 }

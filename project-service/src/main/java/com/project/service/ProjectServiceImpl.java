@@ -1,11 +1,13 @@
 package com.project.service;
 
+import com.project.client.RegistrationServiceClient;
 import com.project.dao.ProjectRepository;
 import com.project.dao.SprintRepository;
 import com.project.dao.SubTaskRepository;
 import com.project.dao.UserStoryRepository;
 import com.project.dto.*;
 import com.project.exception.InvalidProjectAccessException;
+import com.project.exception.SprintNotFoundException;
 import com.project.model.*;
 
 import org.modelmapper.ModelMapper;
@@ -35,10 +37,12 @@ public class ProjectServiceImpl implements ProjectService {
 	private final ModelMapper modelMapper;
 	private final ApiResponse response;
 	private final SprintRepository sprintRepository;
+	private final RegistrationServiceClient client;
 	
 	public ProjectServiceImpl(UserStoryRepository userRepository,
 							  ModelMapper modelmapper, ApiResponse respose, SubTaskRepository subTaskRepository,
-							  ProjectRepository projectRepository, SprintRepository sprintRepository) {
+							  ProjectRepository projectRepository, SprintRepository sprintRepository,
+							  RegistrationServiceClient client) {
 		super();
 		this.userStoryRepository = userRepository;
 		this.modelMapper = modelmapper;
@@ -46,6 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
 		this.subTaskRepository=subTaskRepository;
 		this.projectRepository=projectRepository;
 		this.sprintRepository = sprintRepository;
+		this.client =client;
 	}
 	
 	@Override
@@ -80,10 +85,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ApiResponse> addUserStories(List<Integer> listOfIds) {
+	public List<ApiResponse> addUserStories(List<Integer> listOfIds,int sprintId) {
 		
 		List<ApiResponse> responseList = new ArrayList<>();
-		List<Integer> list =userStoryRepository.setStatusById(Status.DEFINED, listOfIds);
+		if(sprintId==0){
+			throw new SprintNotFoundException("Sprint Id is missing for this user story");
+		}
+		List<Integer> list =userStoryRepository.setStatusById(Status.DEFINED, listOfIds,sprintId);
 		for(int id :list){
 			response.setId(id);
 			response.setStatus("added");
@@ -117,6 +125,8 @@ public class ProjectServiceImpl implements ProjectService {
 			if(userStory.getRemainingEfforts()!=0){
 				userStory1.get().setRemainingEfforts(userStory.getRemainingEfforts());
 			}
+
+
 			
 			userStoryRepository.save(userStory1.get());
 			
@@ -132,7 +142,7 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		SubTaskDTO subTaskDTO = modelMapper.map(subTask,SubTaskDTO.class);
-		
+		subTaskDTO.setUserStoryId(id);
 		SubTaskDTO dto= subTaskRepository.save(subTaskDTO);
 		
 		response.setId(dto.getId());
@@ -175,7 +185,9 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<ProjectDetailsModel> getAllDetails(String userId) {
-		List<ProjectDetailsModel>allDetails = projectRepository.getAllDetails(userId);
+		List<String> listOfProjectIds = client.getUser(userId);
+
+		List<ProjectDetailsModel>allDetails = projectRepository.getAllDetails(listOfProjectIds);
 		/*ProjectDetailsModel projectDetailsModel = new ProjectDetailsModel();
 		
 		if(allDetails!=null && !allDetails.isEmpty()){
@@ -241,7 +253,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Optional<SprintDTO> dto = sprintRepository.findById(id);
 
 		if(dto.isPresent()){
-			if(! sprintDTO.getProjectId().isEmpty())
+			if( sprintDTO.getProjectId()!=null)
 				dto.get().setProjectId(sprintDTO.getProjectId());
 
 			if(null != sprintDTO.getDuration())
@@ -258,7 +270,7 @@ public class ProjectServiceImpl implements ProjectService {
 			SprintDTO sprintDTO1 = sprintRepository.save(dto.get());
 
 			response.setId(sprintDTO1.getId());
-			response.setStatus("created");
+			response.setStatus("updated");
 
 		}
 

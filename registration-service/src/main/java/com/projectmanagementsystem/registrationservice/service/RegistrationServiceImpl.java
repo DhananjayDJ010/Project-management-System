@@ -6,6 +6,7 @@ import com.projectmanagementsystem.registrationservice.entity.ProjectUser;
 import com.projectmanagementsystem.registrationservice.entity.ProjectUserKey;
 import com.projectmanagementsystem.registrationservice.exception.UserAlreadyExistsException;
 import com.projectmanagementsystem.registrationservice.exception.UserNotFoundException;
+import com.projectmanagementsystem.registrationservice.model.ProjectAccessRequest;
 import com.projectmanagementsystem.registrationservice.model.ProjectRoleModel;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -101,6 +102,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         List<UserDetailsDTO> allUsers = getAllUsers();
         return allUsers.stream().filter(user -> user.getProjectRoles().stream().filter(project -> projectIds.contains(project.getProjectId()))
                 .collect(Collectors.toList()).size() > 0).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getUser(String userId) {
+        return registrationDAO.getUser(userId);
     }
 
     @Override
