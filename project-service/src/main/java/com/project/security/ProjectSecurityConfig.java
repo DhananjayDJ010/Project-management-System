@@ -40,7 +40,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests().regexMatchers(".*/subtask.*", ".*/update/user-story/.*", ".*/publish/.*")
                 .hasAnyAuthority(CollaborationRole.PROJECT_MANAGER.name(), CollaborationRole.SCRUM_MASTER.name(),
                         CollaborationRole.MEMBER.name());
-        httpSecurity.authorizeRequests().regexMatchers(".*/allDetails.*")
+        httpSecurity.authorizeRequests().regexMatchers(".*/allDetails.*", ".*/get-details.*")
                 .hasAnyAuthority(UserRole.MANAGER.name(), UserRole.USER.name());
 
         httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationServiceClient, projectService),

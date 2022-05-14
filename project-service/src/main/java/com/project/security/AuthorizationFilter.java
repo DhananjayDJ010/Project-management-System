@@ -69,7 +69,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     throw new UserNotFoundException("Authentication failed: Invalid user");
 
                 if(! request.getServletPath().contains("allDetails") && ! request.getServletPath().contains("managed") &&
-                        ! request.getServletPath().contains("create-project")){
+                        ! request.getServletPath().contains("get-details") && ! request.getServletPath().contains("create-project")){
                     String projectIds = request.getHeader("projectIds");
                     if(projectIds == null || projectIds.isEmpty()) {
                         throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");

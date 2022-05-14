@@ -24,4 +24,6 @@ public interface UserStoryRepository extends JpaRepository<UserStoryDTO,Integer>
 	
 	@Query(nativeQuery=true, value ="select id, name from user_story_details where name=:name")
 	public List<Map<String,Object>>  searchByName (@Param("name") String name);
+
+	public List<UserStoryDTO> findBySprintId(int sprintId);
 }

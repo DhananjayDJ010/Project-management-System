@@ -15,9 +15,9 @@ public class CorsConfig {
     public CorsWebFilter corsWebFilter(){
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET" ,"POST", "DELETE"));
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET" ,"POST", "DELETE", "PUT"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Authorization", "X-Requested-With", "requestId", "Correlation-Id", "projectIds", "create-project"));
-        corsConfiguration.setExposedHeaders(Arrays.asList("token", "projectIds", "create-project"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("token", "projectIds", "create-project", "Access-Control-Allow-Origin"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsWebFilter(source);

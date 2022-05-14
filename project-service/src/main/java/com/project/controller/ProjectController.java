@@ -170,5 +170,14 @@ public class ProjectController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(searchResult);
 	}
-	
+
+	@GetMapping("/get-details/user-story/{sprintId}")
+	public ResponseEntity<List<UserStoryModel>> getUserStoriesForSprint(@PathVariable("sprintId") int sprintId){
+		return ResponseEntity.status(HttpStatus.OK).body(service.getUserStoryBySprint(sprintId));
+	}
+
+	@GetMapping("/get-details/sprints/{projectId}")
+	public ResponseEntity<List<SprintResponseModel>> getAllSprintDetails(@PathVariable("projectId") String projectId){
+		return ResponseEntity.status(HttpStatus.OK).body(service.getAllSprintDetails(projectId));
+	}
 }
