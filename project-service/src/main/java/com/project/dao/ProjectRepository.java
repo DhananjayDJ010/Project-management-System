@@ -11,14 +11,16 @@ import org.springframework.data.repository.query.Param;
 import com.project.dto.ProjectDTO;
 import com.project.model.ProjectDetailsModel;
 import com.project.queries.ProjectQuery;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ProjectRepository extends JpaRepository<ProjectDTO, String> {
 	
 	@Query(nativeQuery=true, value="select * from project_details where project_id in(:projectIds)")
 	public List<ProjectDTO> findProjectDetailsById(@Param("projectIds") List<String> projectIds);
 	
-	@Query(nativeQuery=true, value=ProjectQuery.query)
-	public List<ProjectDetailsModel> getAllDetails(@Param("user_id") String userId);
+	@Query(ProjectQuery.query)
+	public List<ProjectDetailsModel> getAllDetails(@Param("projectIds") List<String> projectIds);
 
 	public List<ProjectDTO> findByManagerId(String managerId);
 	

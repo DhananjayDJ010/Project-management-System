@@ -91,4 +91,11 @@ public class RegistrationController {
         return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUsersForProject(projectIdsFromHeader));
     }
 
+    @GetMapping("/get-user/{userId}")
+    public ResponseEntity<List<String>> getUser(@PathVariable("userId") String userId){
+        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUser(userId));
+
+    }
+
+
 }

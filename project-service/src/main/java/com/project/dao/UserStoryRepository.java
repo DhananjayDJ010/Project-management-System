@@ -16,8 +16,8 @@ import com.project.dto.UserStoryDTO;
 public interface UserStoryRepository extends JpaRepository<UserStoryDTO,Integer>{
 	
   @Modifying
-  @Query(nativeQuery=true , value="update user_story_details   set status=:status , is_Backlog=false where id in (:ids) returning id")
-	public List<Integer> setStatusById(@Param("status") Status status, @Param("ids")List<Integer>ids);
+  @Query(nativeQuery=true , value="update user_story_details   set status=:status , is_Backlog=false , sprint_id =:sprintId where id in (:ids) returning id")
+	public List<Integer> setStatusById(@Param("status") Status status, @Param("ids")List<Integer>ids, @Param("sprintId") int sprintId);
   
   @Query(nativeQuery=true, value ="select id, name from user_story_details where id=:id")
 	public List<Map<String,Object>>  searchById (@Param("id") int id);
