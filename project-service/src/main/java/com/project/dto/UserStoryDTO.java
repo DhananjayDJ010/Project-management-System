@@ -20,7 +20,7 @@ public class UserStoryDTO {
 	@Column(name="sprint_id")
 	private int sprintId;
 	@Column(name="project_id")
-	private int projectId;
+	private String projectId;
 	@Column(name="assigned_user")
 	private String assignedUser;
 	@Column(name="acceptance_criteria")
@@ -41,7 +41,7 @@ public class UserStoryDTO {
 	private Priority priority;
 	private boolean isBacklog;
 	
-	public UserStoryDTO(int id, String name,int sprintId,int projectId, String assignedUser,
+	public UserStoryDTO(int id, String name,int sprintId,String projectId, String assignedUser,
 			String acceptanceCriteria, int storyPoints, int estimatedEfforts,
 			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog) {
 		super();
@@ -178,11 +178,11 @@ public class UserStoryDTO {
 	}
 
 
-	public int getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(int projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 }

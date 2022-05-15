@@ -10,7 +10,7 @@ public class UserStoryModel {
 
 	private int id;
 	private int sprintId;
-	private int projectId;
+	private String projectId;
 	private String name;
 	private String assignedUser;
 	private String acceptanceCriteria;
@@ -20,13 +20,12 @@ public class UserStoryModel {
 	private int remainingEfforts;
 	private Status status;
 	private boolean isBacklog;
-	private int sprintId;
 	@Enumerated(EnumType.STRING)
 	private Priority priority;
 	
-	public UserStoryModel( int id,int sprintId, int projectId,String name, String assignedUser,
+	public UserStoryModel( int id,int sprintId, String projectId,String name, String assignedUser,
 			String acceptanceCriteria, int storyPoints, int estimatedEfforts,
-			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog, int sprintId) {
+			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog) {
 		super();
 		
 		this.id=id;
@@ -41,7 +40,6 @@ public class UserStoryModel {
 		this.remainingEfforts = remainingEfforts;
 		this.status = status;
 		this.isBacklog=isBacklog;
-		this.sprintId = sprintId;
 	}
 
 	public UserStoryModel() {
@@ -121,14 +119,6 @@ public class UserStoryModel {
 		this.isBacklog = isBacklog;
 	}
 
-	public int getSprintId(){
-		return sprintId;
-	}
-
-	public void setSprintId(int sprintId){
-		this.sprintId = sprintId;
-	}
-
 	public Status getStatus() {
 		return status;
 	}
@@ -173,11 +163,11 @@ public class UserStoryModel {
 		this.sprintId = sprintId;
 	}
 
-	public int getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(int projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 

@@ -425,7 +425,7 @@ public ApiResponse deleteSubTask(int id) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return sprintRepository.findByProjectId(projectId).stream().map(sprintDTO -> modelMapper.map(sprintDTO, SprintResponseModel.class))
 				.collect(Collectors.toList());
-
+	}
 
 	@Override
 	public List<UserStoryModel> getUserstoriesInBacklog(String projectId) {

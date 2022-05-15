@@ -80,6 +80,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    @Transactional
     public List<UserDetailsDTO> getAllUsers() {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return StreamSupport.stream(registrationDAO.findAll().spliterator(), true)
@@ -98,6 +99,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
+    @Transactional
     public List<UserDetailsDTO> getUsersForProject(List<String> projectIds) {
         List<UserDetailsDTO> allUsers = getAllUsers();
         return allUsers.stream().filter(user -> user.getProjectRoles().stream().filter(project -> projectIds.contains(project.getProjectId()))
