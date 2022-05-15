@@ -5,6 +5,8 @@ import com.project.dto.Status;
 public class UserStoryModel {
 
 	private int id;
+	private int sprintId;
+	private int projectId;
 	private String name;
 	private String assignedUser;
 	private String acceptanceCriteria;
@@ -15,12 +17,14 @@ public class UserStoryModel {
 	private Status status;
 	private boolean isBacklog;
 	
-	public UserStoryModel( int id,String name, String assignedUser,
+	public UserStoryModel( int id,int sprintId, int projectId,String name, String assignedUser,
 			String acceptanceCriteria, int storyPoints, int estimatedEfforts,
 			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog) {
 		super();
 		
 		this.id=id;
+		this.sprintId=sprintId;
+		this.projectId=projectId;
 		this.name = name;
 		this.assignedUser = assignedUser;
 		this.acceptanceCriteria = acceptanceCriteria;
@@ -128,6 +132,21 @@ public class UserStoryModel {
 				+ ", remainingEfforts=" + remainingEfforts + ", status="
 				+ status + ", isBacklog=" + isBacklog + "]";
 	}
-	
-	
+
+
+	public int getSprintId() {
+		return sprintId;
+	}
+
+	public void setSprintId(int sprintId) {
+		this.sprintId = sprintId;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
 }
