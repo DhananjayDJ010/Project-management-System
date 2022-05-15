@@ -411,6 +411,7 @@ public ApiResponse deleteSubTask(int id) {
 	
 	return response;
 }
+
 	@Override
 	public List<UserStoryModel> getUserStoryBySprint(int sprintId){
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -424,6 +425,14 @@ public ApiResponse deleteSubTask(int id) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return sprintRepository.findByProjectId(projectId).stream().map(sprintDTO -> modelMapper.map(sprintDTO, SprintResponseModel.class))
 				.collect(Collectors.toList());
+
+
+	@Override
+	public List<UserStoryModel> getUserstoriesInBacklog(String projectId) {
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		List<UserStoryDTO> userStoryDTOS = userStoryRepository.findUserStoryInBacklog(projectId);
+		return userStoryDTOS.stream().map(userStory -> modelMapper.map(userStory, UserStoryModel.class)).collect(Collectors.toList());
+
 	}
 
 }

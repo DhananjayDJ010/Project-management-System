@@ -3,6 +3,7 @@ package com.project.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.project.model.UserStoryModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +26,10 @@ public interface UserStoryRepository extends JpaRepository<UserStoryDTO,Integer>
 	@Query(nativeQuery=true, value ="select id, name from user_story_details where name=:name")
 	public List<Map<String,Object>>  searchByName (@Param("name") String name);
 
+
 	public List<UserStoryDTO> findBySprintId(int sprintId);
+
+	@Query(nativeQuery=true, value ="select* from user_story_details where project_id=:project_id and isBacklog = true")
+	public List<UserStoryDTO> findUserStoryInBacklog(@Param("project_id")String projectId);
+
 }

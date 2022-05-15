@@ -114,6 +114,15 @@ public class ProjectController {
 		
 	}
 
+	@GetMapping("/backlog/user-story/{projectId}")
+	public ResponseEntity<List<UserStoryModel>> getStoriesInBacklog(@PathVariable("projectId") String projectId,
+																   @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+
+		List<UserStoryModel> storiesInBacklog = service.getUserstoriesInBacklog(projectId);
+
+		return ResponseEntity.status(HttpStatus.OK).body(storiesInBacklog);
+
+	}
 	@GetMapping("/allDetails")
 	public ResponseEntity<List<ProjectDetailsModel>> getAllDetails(@RequestParam("userId") String userId,
 																   @RequestHeader(HttpHeaders.AUTHORIZATION) String token){

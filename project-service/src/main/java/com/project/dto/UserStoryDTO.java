@@ -19,6 +19,8 @@ public class UserStoryDTO {
 	private String name;
 	@Column(name="sprint_id")
 	private int sprintId;
+	@Column(name="project_id")
+	private int projectId;
 	@Column(name="assigned_user")
 	private String assignedUser;
 	@Column(name="acceptance_criteria")
@@ -39,13 +41,14 @@ public class UserStoryDTO {
 	private Priority priority;
 	private boolean isBacklog;
 	
-	public UserStoryDTO(int id, String name,int sprintId, String assignedUser,
+	public UserStoryDTO(int id, String name,int sprintId,int projectId, String assignedUser,
 			String acceptanceCriteria, int storyPoints, int estimatedEfforts,
 			int consumedEfforts, int remainingEfforts, Status status,boolean isBacklog) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.sprintId=sprintId;
+		this.projectId =projectId;
 		this.assignedUser = assignedUser;
 		this.acceptanceCriteria = acceptanceCriteria;
 		this.storyPoints = storyPoints;
@@ -174,12 +177,12 @@ public class UserStoryDTO {
 				+ isBacklog + "]";
 	}
 
-	
 
-	
+	public int getProjectId() {
+		return projectId;
+	}
 
-	
-	
-	
-
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
 }
