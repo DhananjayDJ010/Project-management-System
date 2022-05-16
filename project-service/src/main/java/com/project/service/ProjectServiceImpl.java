@@ -67,7 +67,7 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		for(UserStoryDTO userStory :userStoryDTO){
 			userStory.setBacklog(true);
-			userStory.setStatus(Status.NEW);
+			userStory.setStatus(Status.DEFINED);
 		}
 		List<UserStoryDTO> list = userStoryRepository.saveAll(userStoryDTO);
 		
@@ -431,8 +431,8 @@ public ApiResponse deleteSubTask(int id) {
 	public List<UserStoryModel> getUserstoriesInBacklog(String projectId) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		List<UserStoryDTO> userStoryDTOS = userStoryRepository.findUserStoryInBacklog(projectId);
-		return userStoryDTOS.stream().map(userStory -> modelMapper.map(userStory, UserStoryModel.class)).collect(Collectors.toList());
-
+		return userStoryDTOS.stream()
+				.map(userStory -> modelMapper.map(userStory, UserStoryModel.class)).collect(Collectors.toList());
 	}
 
 }

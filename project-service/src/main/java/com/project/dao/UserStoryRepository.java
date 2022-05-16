@@ -29,7 +29,7 @@ public interface UserStoryRepository extends JpaRepository<UserStoryDTO,Integer>
 
 	public List<UserStoryDTO> findBySprintId(int sprintId);
 
-	@Query(nativeQuery=true, value ="select* from user_story_details where project_id=:project_id and isBacklog = true")
+	@Query(nativeQuery=true, value ="select * from user_story_details where project_id=:project_id and is_backlog = true")
 	public List<UserStoryDTO> findUserStoryInBacklog(@Param("project_id")String projectId);
 
 }

@@ -1,5 +1,6 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.dto.Priority;
 import com.project.dto.Status;
 

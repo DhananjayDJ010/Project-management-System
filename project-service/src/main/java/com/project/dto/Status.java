@@ -9,7 +9,7 @@ public enum Status {
 	TO_DO,
 	IN_PROGRESS,
 	DONE,
-	ACCEPECTED,
+	ACCEPTED,
 	DEPLOYED;
 
 	/*NEW("NEW"),
