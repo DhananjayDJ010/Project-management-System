@@ -3,8 +3,10 @@ package com.project.controller;
 //import org.apache.logging.log4j.Logger;
 //import org.junit.platform.commons.logging.LoggerFactory;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.project.model.*;
 import org.slf4j.Logger;
@@ -65,7 +67,6 @@ public class ProjectController {
 	public ResponseEntity<List<ApiResponse>> createUserStory(@RequestBody List<UserStoryModel> userStoryDetails,
 															 @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
 															 @RequestHeader("projectIds") String projectIds){
-		
 		List<ApiResponse> response = service.createUserStory(userStoryDetails, projectIds);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -73,10 +74,11 @@ public class ProjectController {
 	
 	@PostMapping("/add/sprint/{sprintId}/user-stories")
 	public ResponseEntity<List<ApiResponse>> addUserStory(@PathVariable("sprintId")int sprintId,
-														  @RequestBody ArrayList<Integer> listOfIds, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+														  @RequestBody String listOfIds, @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
 														  @RequestHeader("projectIds") String projectId){
-		
-		List<ApiResponse> response = service.addUserStories(listOfIds,sprintId);
+		String formattedIds = listOfIds.replace("\"","");
+		List<Integer> userStoryIds = (Arrays.stream(formattedIds.split(",")).map(id -> Integer.parseInt(id)).collect(Collectors.toList()));
+		List<ApiResponse> response = service.addUserStories(userStoryIds,sprintId);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 		
@@ -188,5 +190,12 @@ public class ProjectController {
 	@GetMapping("/get-details/sprints/{projectId}")
 	public ResponseEntity<List<SprintResponseModel>> getAllSprintDetails(@PathVariable("projectId") String projectId){
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAllSprintDetails(projectId));
+	}
+
+	@PostMapping("/get-details/project")
+	public ResponseEntity<List<ProjectDataModel>> getProjectDetails(@RequestBody String projectIds){
+		String formattedIds = projectIds.replace("\"","");
+		List<String> userStoryIds = Arrays.asList(formattedIds.split(","));
+		return ResponseEntity.status(HttpStatus.OK).body(service.getProjectDetails(userStoryIds));
 	}
 }

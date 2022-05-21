@@ -91,7 +91,7 @@ public class ProjectServiceImpl implements ProjectService {
 		if(sprintId==0){
 			throw new SprintNotFoundException("Sprint Id is missing for this user story");
 		}
-		List<Integer> list =userStoryRepository.setStatusById(Status.DEFINED, listOfIds,sprintId);
+		List<Integer> list =userStoryRepository.setStatusById(Status.DEFINED.name(), listOfIds,sprintId);
 		for(int id :list){
 			response.setId(id);
 			response.setStatus("added");
@@ -433,6 +433,13 @@ public ApiResponse deleteSubTask(int id) {
 		List<UserStoryDTO> userStoryDTOS = userStoryRepository.findUserStoryInBacklog(projectId);
 		return userStoryDTOS.stream()
 				.map(userStory -> modelMapper.map(userStory, UserStoryModel.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<ProjectDataModel> getProjectDetails(List<String> projectIds) {
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		return projectRepository.findByProjectIdIn(projectIds).stream()
+				.map(projectDTO -> modelMapper.map(projectDTO, ProjectDataModel.class)).collect(Collectors.toList());
 	}
 
 }

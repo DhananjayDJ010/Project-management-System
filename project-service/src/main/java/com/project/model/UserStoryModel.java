@@ -3,10 +3,12 @@ package com.project.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.dto.Priority;
 import com.project.dto.Status;
+import lombok.ToString;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+@ToString
 public class UserStoryModel {
 
 	private int id;
@@ -135,26 +137,6 @@ public class UserStoryModel {
 	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
-
-	@Override
-	public String toString() {
-		return "UserStoryModel{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", assignedUser='" + assignedUser + '\'' +
-				", acceptanceCriteria='" + acceptanceCriteria + '\'' +
-				", storyPoints=" + storyPoints +
-				", estimatedEfforts=" + estimatedEfforts +
-				", consumedEfforts=" + consumedEfforts +
-				", remainingEfforts=" + remainingEfforts +
-				", status=" + status +
-				", isBacklog=" + isBacklog +
-				", sprintId=" + sprintId +
-				", priority=" + priority +
-				'}';
-	}
-
-
 
 	public int getSprintId() {
 		return sprintId;

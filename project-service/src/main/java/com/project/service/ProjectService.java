@@ -47,4 +47,6 @@ public interface ProjectService {
 
 	public List<UserStoryModel> getUserstoriesInBacklog(String projectId);
 
+	public List<ProjectDataModel> getProjectDetails(List<String> projectIds);
+
 }
