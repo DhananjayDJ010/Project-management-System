@@ -30,4 +30,6 @@ public interface ProjectRepository extends JpaRepository<ProjectDTO, String> {
 	@Query(nativeQuery=true, value ="select id, name from project_details where name=:name")
 	public List<Map<String,Object>>  searchByName (@Param("name") String name);
 
+	List<ProjectDTO> findByProjectIdIn(List<String> projectIds);
+
 }
