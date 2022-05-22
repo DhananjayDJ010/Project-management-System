@@ -120,6 +120,11 @@ public class ProjectServiceImpl implements ProjectService {
 				userStory1.get().setSprintId(userStory.getSprintId());
 				userStory1.get().setBacklog(false);
 			}
+			else{
+				//moving to backlog
+				userStory1.get().setSprintId(userStory.getSprintId());
+				userStory1.get().setBacklog(true);
+			}
 			if(userStory.getPriority()!=null){
 				userStory1.get().setPriority(userStory.getPriority());
 			}
