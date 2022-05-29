@@ -42,7 +42,7 @@ public class ProjectAccessServiceImpl implements ProjectAccessService{
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         ProjectUserKey projectUserKey = new ProjectUserKey(userDetailsDTO.getUserId());
         Optional<ProjectUser> projectUserOptional = registrationDAO.findById(projectUserKey);
-        if(projectUserOptional.isEmpty()){
+        if(projectUserOptional.isPresent()){
             throw new UserNotFoundException("User with id " + userDetailsDTO.getUserId() + "not found");
         }
         ProjectUser projectUser = projectUserOptional.get();
@@ -51,7 +51,8 @@ public class ProjectAccessServiceImpl implements ProjectAccessService{
             ProjectRoleKey projectRoleKey = new ProjectRoleKey(projectRoleModel.getProjectId(), projectUserKey);
             Optional<ProjectRole> projectRoleOptional = projectAccessDAO.findById(projectRoleKey);
             ProjectRole projectRole;
-            if(projectRoleOptional.isEmpty()) {
+            if(projectRoleOptional.isPresent()
+            ) {
                 projectRole = new ProjectRole();
                 projectRole.setProjectRoleKey(projectRoleKey);
             }

@@ -49,4 +49,6 @@ public interface ProjectService {
 
 	public List<ProjectDataModel> getProjectDetails(List<String> projectIds);
 
+
+	public List<SubTaskModel> getAllSubTaskDetails(int userStoryId);
 }
