@@ -212,21 +212,21 @@ public class ProjectController {
     @ApiResponses(value = {@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK")})
     @GetMapping("/get-details/user-story/{sprintId}")
-    public ResponseEntity<List<UserStoryModel>> getUserStoriesForSprint(@PathVariable("sprintId") int sprintId) {
+    public ResponseEntity<List<UserStoryModel>> getUserStoriesForSprint(@PathVariable("sprintId") int sprintId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getUserStoryBySprint(sprintId));
     }
     @Operation(summary = "Get Sprints")
     @ApiResponses(value = {@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK")})
     @GetMapping("/get-details/sprints/{projectId}")
-    public ResponseEntity<List<SprintResponseModel>> getAllSprintDetails(@PathVariable("projectId") String projectId) {
+    public ResponseEntity<List<SprintResponseModel>> getAllSprintDetails(@PathVariable("projectId") String projectId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAllSprintDetails(projectId));
     }
     @Operation(summary = "Get Subtask")
     @ApiResponses(value = {@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK")})
     @GetMapping("/get-details/sub-task/{userStoryId}")
-    public ResponseEntity<List<SubTaskModel>> getAllSubTaskDetails(@PathVariable("userStoryId") int userStoryId) {
+    public ResponseEntity<List<SubTaskModel>> getAllSubTaskDetails(@PathVariable("userStoryId") int userStoryId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAllSubTaskDetails(userStoryId));
     }
 
