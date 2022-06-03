@@ -155,7 +155,9 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.OK).body(allDetails);
 
     }
-
+    @Operation(summary = "get Managed projects")
+    @ApiResponses(value = {@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal Server Error"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "OK")})
     @GetMapping("/project/managed/{managerId}")
     public ResponseEntity<List<ProjectDataModel>> getProjectsManaged(@PathVariable("managerId") String managerId,
                                                                      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
