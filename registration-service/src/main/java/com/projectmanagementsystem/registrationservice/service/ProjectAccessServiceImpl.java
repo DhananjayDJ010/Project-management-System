@@ -51,7 +51,8 @@ public class ProjectAccessServiceImpl implements ProjectAccessService{
             ProjectRoleKey projectRoleKey = new ProjectRoleKey(projectRoleModel.getProjectId(), projectUserKey);
             Optional<ProjectRole> projectRoleOptional = projectAccessDAO.findById(projectRoleKey);
             ProjectRole projectRole;
-            if(projectRoleOptional.isEmpty()) {
+            if(projectRoleOptional.isEmpty()
+            ) {
                 projectRole = new ProjectRole();
                 projectRole.setProjectRoleKey(projectRoleKey);
             }

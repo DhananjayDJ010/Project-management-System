@@ -187,11 +187,14 @@ public class ProjectServiceImpl implements ProjectService {
 			if(subTaskDTO.getRemainingEfforts()!=0){
 				subTaskDTO1.get().setConsumedEfforts(subTaskDTO.getConsumedEfforts());
 			}
+			if(subTaskDTO.getStatus()!=null){
+			    subTaskDTO1.get().setStatus(subTaskDTO.getStatus());
+            }
 			
 			SubTaskDTO dto = subTaskRepository.save(subTaskDTO1.get());
-			
+			System.out.print("updated subtask dto is"+dto);
 			response.setId(dto.getId());
-			response.setStatus("created");
+			response.setStatus("updated");
 			
 		}
 		
@@ -445,6 +448,13 @@ public ApiResponse deleteSubTask(int id) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return projectRepository.findByProjectIdIn(projectIds).stream()
 				.map(projectDTO -> modelMapper.map(projectDTO, ProjectDataModel.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<SubTaskModel> getAllSubTaskDetails(int userStoryId) {
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		return subTaskRepository.findByUserStoryId(userStoryId).stream()
+				.map(subTaskDTO -> modelMapper.map(subTaskDTO, SubTaskModel.class)).collect(Collectors.toList());
 	}
 
 }

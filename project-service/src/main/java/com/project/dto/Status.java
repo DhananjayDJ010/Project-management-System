@@ -3,14 +3,11 @@ package com.project.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public enum Status {
-	
-	NEW,
+
 	DEFINED,
-	TO_DO,
 	IN_PROGRESS,
-	DONE,
-	ACCEPTED,
-	DEPLOYED;
+	COMPLETED,
+	ACCEPTED;
 
 	/*NEW("NEW"),
 	DEFINED("DEFINED"),

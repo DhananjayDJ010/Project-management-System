@@ -192,6 +192,11 @@ public class ProjectController {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAllSprintDetails(projectId));
 	}
 
+	@GetMapping("/get-details/sub-task/{userStoryId}")
+	public ResponseEntity<List<SubTaskModel>> getAllSubTaskDetails(@PathVariable("userStoryId") int userStoryId){
+		return ResponseEntity.status(HttpStatus.OK).body(service.getAllSubTaskDetails(userStoryId));
+	}
+
 	@PostMapping("/get-details/project")
 	public ResponseEntity<List<ProjectDataModel>> getProjectDetails(@RequestBody String projectIds){
 		String formattedIds = projectIds.replace("\"","");
