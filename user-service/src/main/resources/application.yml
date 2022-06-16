@@ -10,8 +10,8 @@ spring:
     name: user-service
   datasource:
     username: postgres
-    password: Root@010
-    url: jdbc:postgresql://localhost:5432/NotificationDB
+    password: Root1234
+    url: jdbc:postgresql://project-management-system-database.c4vwssblkshy.ap-south-1.rds.amazonaws.com:5432/NotificationDB
   jpa:
     defer-datasource-initialization: true
     hibernate:
