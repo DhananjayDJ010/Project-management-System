@@ -38,7 +38,7 @@ public class RegistrationSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests().regexMatchers(".*manager/.*")
                 .hasAnyAuthority(CollaborationRole.PROJECT_MANAGER.name());
         httpSecurity.authorizeRequests().regexMatchers(".*get-all-users.*")
-                .hasAnyAuthority(UserRole.MANAGER.name());
+                .hasAnyAuthority(UserRole.MANAGER.name(), UserRole.USER.name());
         httpSecurity.authorizeRequests().regexMatchers(".*get-users.*")
                 .hasAnyAuthority(UserRole.MANAGER.name(), CollaborationRole.PROJECT_MANAGER.name(),
                         CollaborationRole.MEMBER.name(), CollaborationRole.SCRUM_MASTER.name());
