@@ -25,4 +25,5 @@ public class UserDetailsDTO {
     private String password;
     private String encryptedPassword;
     private List<ProjectRoleModel> projectRoles;
+    private String accessToken;
 }

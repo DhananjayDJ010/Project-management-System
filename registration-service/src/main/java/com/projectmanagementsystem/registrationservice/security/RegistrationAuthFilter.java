@@ -64,7 +64,8 @@ public class RegistrationAuthFilter extends UsernamePasswordAuthenticationFilter
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(environment.getProperty("token.expiration_time"))))
                 .signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret"))
                 .compact();
-        response.addHeader("token", token);
+        userDetailsDTO.setAccessToken(token);
+        response.addHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(new ObjectMapper().writeValueAsString(userDetailsDTO));
     }

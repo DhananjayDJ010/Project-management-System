@@ -34,21 +34,33 @@ public class RegistrationController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping("/registration/hello")
+    public ResponseEntity<WarmupModel> healthCheck(){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        WarmupModel warmUp = new WarmupModel("Hello from registration service");
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(warmUp);
+    }
+
     @PostMapping("/user/register")
     public ResponseEntity<RegistrationResponseModel> userSignup(@RequestBody RegistrationRequestModel loginRequestModel) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDetailsDTO userDetailsDTO = modelMapper.map(loginRequestModel, UserDetailsDTO.class);
         UserDetailsDTO createdUser = registrationService.userSignup(userDetailsDTO);
         RegistrationResponseModel registrationResponseModel = modelMapper.map(createdUser, RegistrationResponseModel.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registrationResponseModel);
+        return ResponseEntity.status(HttpStatus.CREATED).headers(responseHeaders).body(registrationResponseModel);
     }
 
     @GetMapping("/user/get-details/{emailId}")
     public ResponseEntity<UserDetailsDTO> getUserDetailsByEmailId(@PathVariable String emailId,
                                                                             @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDetailsDTO loginDTO = registrationService.getUserDetailsByEmailId(emailId);
-        return ResponseEntity.status(HttpStatus.OK).body(loginDTO);
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(loginDTO);
     }
 
     @PostMapping("/manager/manage-user")
@@ -57,6 +69,8 @@ public class RegistrationController {
                                                                               @RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                                               @RequestHeader("projectIds") String projectIds,
                                                                               @RequestHeader("create-project") String createProject){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
         List<String> projectIdsFromRequest = new ArrayList<>();
         List<String> projectIdsFromHeader = Arrays.asList(projectIds.split(","));
         for(ProjectAccessRequest projectAccessRequest : projectAccessRequestModel.getProjectAccessRequests()){
@@ -73,27 +87,33 @@ public class RegistrationController {
             UserDetailsDTO singleUserResponse = projectAccessService.manageProjectAccess(userDetailsDTO);
             response.add(modelMapper.map(singleUserResponse, UserDetailsResponseModel.class));
         });
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).headers(responseHeaders).body(response);
     }
 
     @GetMapping("/get-all-users")
     public ResponseEntity<List<UserDetailsDTO>> getAllUsers(){
-        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getAllUsers());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(registrationService.getAllUsers());
 
     }
 
     @GetMapping("/get-users")
     public ResponseEntity<List<UserDetailsDTO>> getUsersForProject(@RequestHeader("projectIds") String projectIds){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
         if(projectIds == null || projectIds.isEmpty()){
             throw new InvalidProjectAccessException("Project ids not passed in header");
         }
         List<String> projectIdsFromHeader = Arrays.asList(projectIds.split(","));
-        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUsersForProject(projectIdsFromHeader));
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(registrationService.getUsersForProject(projectIdsFromHeader));
     }
 
     @GetMapping("/get-user/{userId}")
     public ResponseEntity<List<String>> getUser(@PathVariable("userId") String userId){
-        return ResponseEntity.status(HttpStatus.OK).body(registrationService.getUser(userId));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(registrationService.getUser(userId));
 
     }
 

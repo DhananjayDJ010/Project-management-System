@@ -68,8 +68,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 if(! userName.equals(userDetailsDTO.getEmailId()))
                     throw new UserNotFoundException("Authentication failed: Invalid user");
 
-                if(! request.getServletPath().contains("allDetails") && ! request.getServletPath().contains("managed") &&
-                        ! request.getServletPath().contains("get-details") && ! request.getServletPath().contains("create-project")){
+                if(! request.getRequestURI().contains("allDetails") && ! request.getRequestURI().contains("managed") &&
+                        ! request.getRequestURI().contains("get-details") && ! request.getRequestURI().contains("create-project")){
                     String projectIds = request.getHeader("projectIds");
                     if(projectIds == null || projectIds.isEmpty()) {
                         throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
@@ -83,7 +83,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             .collect(Collectors.toList());
 
                     if(userDetailsDTO.getUserRole().equals(UserRole.MANAGER)) {
-                        if(request.getServletPath().contains("manage-user")) {
+                        if(request.getRequestURI().contains("manage-user")) {
                             String createProject = request.getHeader("create-project");
                             if(createProject == null || createProject.isEmpty()) {
                                 throw new InvalidProjectAccessException("create-project header is not passed in the request");

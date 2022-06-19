@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 
 @EnableWebSecurity
 public class RegistrationSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -20,14 +21,16 @@ public class RegistrationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final Environment environment;
     private final ProjectServiceClient projectServiceClient;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public RegistrationSecurityConfig(RegistrationService registrationService, BCryptPasswordEncoder bCryptPasswordEncoder,
-                                      Environment environment, ProjectServiceClient projectServiceClient) {
+                                      Environment environment, ProjectServiceClient projectServiceClient, RestTemplate restTemplate) {
         this.registrationService = registrationService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.environment = environment;
         this.projectServiceClient = projectServiceClient;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class RegistrationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority(UserRole.USER.name(), UserRole.MANAGER.name());
         httpSecurity.authorizeRequests().regexMatchers("/", ".*user/.*").permitAll();
         httpSecurity.addFilter(getAuthenticationFilter());
-        httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationService, projectServiceClient),
+        httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationService, projectServiceClient, restTemplate),
                 RegistrationAuthFilter.class);
     }
 

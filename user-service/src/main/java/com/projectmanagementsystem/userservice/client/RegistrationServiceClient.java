@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "registration-service")
+@FeignClient(name = "registration-service", url="${client.baseUrl}")
 public interface RegistrationServiceClient {
 
     @PostMapping("/api/v1.0/project-tracker/manager/manage-user")
