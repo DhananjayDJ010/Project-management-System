@@ -15,10 +15,11 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -34,18 +35,20 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final Environment environment;
     private final RegistrationService registrationService;
     private final ProjectServiceClient projectServiceClient;
+    private final RestTemplate restTemplate;
 
     public AuthorizationFilter(Environment environment, RegistrationService registrationService,
-                               ProjectServiceClient projectServiceClient){
+                               ProjectServiceClient projectServiceClient, RestTemplate restTemplate){
         this.environment = environment;
         this.registrationService = registrationService;
         this.projectServiceClient = projectServiceClient;
+        this.restTemplate = restTemplate;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().equals("**/user/**"))
+        if(request.getRequestURI().equals("**/user/**"))
             filterChain.doFilter(request, response);
         else{
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -68,9 +71,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
                     if(! userName.equals(userDetailsDTO.getEmailId()))
                         throw new UserNotFoundException("Authentication failed: Invalid user");
-
-                    if(! request.getServletPath().contains("get-all-users") && ! request.getServletPath().contains("managed") &&
-                            ! request.getServletPath().contains("get-details")){
+                    log.info("servlet path in auth file: " + request.getRequestURI());
+                    if(! request.getRequestURI().contains("get-all-users") && ! request.getRequestURI().contains("managed") &&
+                            ! request.getRequestURI().contains("get-details")){
                         String projectIds = request.getHeader("projectIds");
                         if(projectIds == null || projectIds.isEmpty()) {
                             throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
@@ -84,7 +87,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                 .collect(Collectors.toList());
 
                         if(userDetailsDTO.getUserRole().equals(UserRole.MANAGER)) {
-                            if(request.getServletPath().contains("manage-user")) {
+                            if(request.getRequestURI().contains("manage-user")) {
                                 String createProject = request.getHeader("create-project");
                                 if(createProject == null || createProject.isEmpty()) {
                                     throw new InvalidProjectAccessException("create-project header is not passed in the request");
@@ -95,8 +98,15 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                 }
                                 if(createProject.equalsIgnoreCase("true")){
                                     caseCreate = true;
-                                    List<ProjectDataModel> allManagedProjects = projectServiceClient.
-                                            getProjectsManaged(userDetailsDTO.getUserId(), "Bearer " + token);
+                                    HttpHeaders headers = new HttpHeaders();
+                                    headers.setContentType(MediaType.APPLICATION_JSON);
+                                    headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+                                    HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+                                    ResponseEntity<ProjectDataModel[]> postResponse = restTemplate.exchange("https://u0bqod1gs3.execute-api.ap-south-1.amazonaws.com/dev/api/v1.0/project-tracker/project/managed/" + userDetailsDTO.getUserId(),
+                                            HttpMethod.GET,httpEntity,ProjectDataModel[].class);
+                                    List<ProjectDataModel> allManagedProjects = Arrays.asList(postResponse.getBody());
+//                                    List<ProjectDataModel> allManagedProjects = projectServiceClient.
+//                                            getProjectsManaged(userDetailsDTO.getUserId(), "Bearer " + token);
                                     List<String> managedIds = allManagedProjects.stream().
                                             map(proj -> proj.getProjectId()).collect(Collectors.toList());
                                     if(! managedIds.isEmpty() && managedIds.containsAll(projectIdList)){

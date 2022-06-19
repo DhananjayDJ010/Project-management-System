@@ -21,3 +21,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8095/eureka
+
+client:
+  baseUrl: https://u0bqod1gs3.execute-api.ap-south-1.amazonaws.com/dev

@@ -11,19 +11,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 
 @EnableWebSecurity
 public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
     private final RegistrationServiceClient registrationServiceClient;
     private final Environment environment;
     private final ProjectServiceClient projectServiceClient;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public UserSecurityConfig(RegistrationServiceClient registrationServiceClient,
-                              Environment environment, ProjectServiceClient projectServiceClient) {
+                              Environment environment, ProjectServiceClient projectServiceClient, RestTemplate restTemplate) {
         this.registrationServiceClient = registrationServiceClient;
         this.environment = environment;
         this.projectServiceClient = projectServiceClient;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class UserSecurityConfig extends WebSecurityConfigurerAdapter {
                         CollaborationRole.MEMBER.name());
         httpSecurity.authorizeRequests().regexMatchers(".*/allDetails.*")
                 .hasAnyAuthority(UserRole.MANAGER.name(), UserRole.USER.name());
-        httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationServiceClient, projectServiceClient),
+        httpSecurity.addFilterBefore(new AuthorizationFilter(environment, registrationServiceClient, projectServiceClient, restTemplate),
                 UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
-@FeignClient(name = "project-service")
+@FeignClient(name = "project-service", url="${client.baseUrl}")
 public interface ProjectServiceClient {
     @GetMapping("/api/v1.0/project-tracker/project/managed/{managerId}")
     public List<ProjectDataModel> getProjectsManaged(@PathVariable("managerId") String managerId,

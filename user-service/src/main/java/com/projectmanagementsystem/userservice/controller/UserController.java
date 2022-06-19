@@ -25,10 +25,20 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping("/user/hello")
+    public ResponseEntity<WarmUpModel> healthCheck(){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        WarmUpModel warmUpModel = new WarmUpModel("Hello from user service");
+        return ResponseEntity.status(HttpStatus.OK).headers(responseHeaders).body(warmUpModel);
+    }
+
     @PostMapping("/manager/create-project")
     public ResponseEntity<CreateProjectResponseModel> createProject(@RequestBody ProjectModel projectModel,
                                                                     @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createProject(projectModel, token));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.status(HttpStatus.CREATED).headers(responseHeaders).body(userService.createProject(projectModel, token));
     }
 
     @PostMapping("/notify")

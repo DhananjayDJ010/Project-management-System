@@ -14,10 +14,11 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -33,12 +34,14 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final Environment environment;
     private final RegistrationServiceClient registrationServiceClient;
     private final ProjectServiceClient projectServiceClient;
+    private final RestTemplate restTemplate;
 
     public AuthorizationFilter(Environment environment, RegistrationServiceClient registrationServiceClient,
-                               ProjectServiceClient projectServiceClient){
+                               ProjectServiceClient projectServiceClient, RestTemplate restTemplate){
         this.environment = environment;
         this.registrationServiceClient = registrationServiceClient;
         this.projectServiceClient = projectServiceClient;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -60,15 +63,31 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     for(String key : role.keySet())
                         rolesFinal.add(new SimpleGrantedAuthority(role.get(key)));
                 }
-
-                UserDetailsDTO userDetailsDTO = registrationServiceClient
-                        .getUserDetailsByEmailId(userName, "Bearer " + token);
+                log.info("Token from request: " + token);
+                UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+                try {
+//                    userDetailsDTO = registrationServiceClient
+//                            .getUserDetailsByEmailId(userName, "Bearer " + token);
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+                    headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+                    HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+//                    ResponseEntity<UserDetailsDTO> getResponse = restTemplate.getForEntity("https://mwwtugllg3.execute-api.ap-south-1.amazonaws.com/dev/api/v1.0/project-tracker/user/get-details/" + userName,
+//                            UserDetailsDTO.class, httpEntity);
+                    ResponseEntity<UserDetailsDTO> getResponse = restTemplate.exchange("https://u0bqod1gs3.execute-api.ap-south-1.amazonaws.com/dev/api/v1.0/project-tracker/user/get-details/" + userName,
+                            HttpMethod.GET,httpEntity,UserDetailsDTO.class);
+                    userDetailsDTO = getResponse.getBody();
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                    logger.info("Exception message feign : " + e.getMessage());
+                }
 
                 if(! userName.equals(userDetailsDTO.getEmailId()))
                     throw new UserNotFoundException("Authentication failed: Invalid user");
 
-                if(! request.getServletPath().contains("get-all-users") && ! request.getServletPath().contains("managed") && ! request.getServletPath().contains("allDetails") &&
-                        ! request.getServletPath().contains("create-project") && ! request.getServletPath().contains("notify")){
+                if(! request.getRequestURI().contains("get-all-users") && ! request.getRequestURI().contains("managed") && ! request.getRequestURI().contains("allDetails") &&
+                        ! request.getRequestURI().contains("create-project") && ! request.getRequestURI().contains("notify")){
                     String projectIds = request.getHeader("projectIds");
                     if(projectIds == null || projectIds.isEmpty()) {
                         throw new InvalidProjectAccessException("ProjectIds header is not passed in the request");
@@ -82,7 +101,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             .collect(Collectors.toList());
 
                     if(userDetailsDTO.getUserRole().equals(UserRole.MANAGER)) {
-                        if(request.getServletPath().contains("manage-user")) {
+                        if(request.getRequestURI().contains("manage-user")) {
                             String createProject = request.getHeader("create-project");
                             if(createProject == null || createProject.isEmpty()) {
                                 throw new InvalidProjectAccessException("create-project header is not passed in the request");
