@@ -74,7 +74,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 //                    ResponseEntity<UserDetailsDTO> getResponse = restTemplate.getForEntity("https://mwwtugllg3.execute-api.ap-south-1.amazonaws.com/dev/api/v1.0/project-tracker/user/get-details/" + userName,
 //                            UserDetailsDTO.class, httpEntity);
-                    ResponseEntity<UserDetailsDTO> getResponse = restTemplate.exchange("https://u0bqod1gs3.execute-api.ap-south-1.amazonaws.com/dev/api/v1.0/project-tracker/user/get-details/" + userName,
+                    ResponseEntity<UserDetailsDTO> getResponse = restTemplate.exchange("https://u1vcnuupy5.execute-api.us-west-2.amazonaws.com/dev/api/v1.0/project-tracker/user/get-details/" + userName,
                             HttpMethod.GET,httpEntity,UserDetailsDTO.class);
                     userDetailsDTO = getResponse.getBody();
                 }

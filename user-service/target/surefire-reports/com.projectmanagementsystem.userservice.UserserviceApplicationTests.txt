@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.projectmanagementsystem.userservice.UserserviceApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.514 s - in com.projectmanagementsystem.userservice.UserserviceApplicationTests

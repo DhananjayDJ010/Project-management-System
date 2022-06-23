@@ -102,7 +102,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                     headers.setContentType(MediaType.APPLICATION_JSON);
                                     headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
                                     HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-                                    ResponseEntity<ProjectDataModel[]> postResponse = restTemplate.exchange("https://u0bqod1gs3.execute-api.ap-south-1.amazonaws.com/dev/api/v1.0/project-tracker/project/managed/" + userDetailsDTO.getUserId(),
+                                    ResponseEntity<ProjectDataModel[]> postResponse = restTemplate.exchange("https://u1vcnuupy5.execute-api.us-west-2.amazonaws.com/dev/api/v1.0/project-tracker/project/managed/" + userDetailsDTO.getUserId(),
                                             HttpMethod.GET,httpEntity,ProjectDataModel[].class);
                                     List<ProjectDataModel> allManagedProjects = Arrays.asList(postResponse.getBody());
 //                                    List<ProjectDataModel> allManagedProjects = projectServiceClient.
